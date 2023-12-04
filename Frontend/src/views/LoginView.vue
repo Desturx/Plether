@@ -10,7 +10,11 @@
                 <p>Contraseña</p>
                 <input v-if="showPassword"  name="passwordShow" v-model="password"  placeholder="password" />
                 <input v-else type="password"  name="passwordHide" v-model="password"  placeholder="password" />
-                <span @click="showPassword = !showPassword">eye</span> 
+                <span @click="showPassword = !showPassword">
+                  <v-icon scale="2" v-if="showPassword" name="fa-eye" />
+                  <v-icon scale="2" v-else name="fa-eye-slash"/>
+                </span> 
+                
             </div>
             
             <div>
@@ -30,6 +34,8 @@
 import axios from 'axios';
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
+
+
 const router = useRouter();
 
 const showPassword = ref(false)
@@ -113,10 +119,13 @@ async function test() {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    position:relative;
     /* position: relative; */
 
     & span {
       position: absolute;
+      top: 42%;
+      left:102%;
       
     }
     & input {

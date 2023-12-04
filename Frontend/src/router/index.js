@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      meta: {guest:false}, // esto debería estar a "false"
+      meta: {guest:false, navbar: true}, // esto debería estar a "false"
       // meta: {guest:true},
       component: HomeView
     },
@@ -24,19 +24,19 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      meta: {guest: true},
+      meta: {guest: true, navbar: false},
       component: () => import('../views/LoginView.vue')
     },
     {
       path: '/register',
       name: 'register',
-      meta: {guest: true},
+      meta: {guest: true, navbar: false},
       component: () => import('../views/RegisterView.vue')
     },
     {
       path: '/profile',
       name: 'profile',
-      meta: {guest: false},
+      meta: {guest: false, navbar: true},
       component: () => import('../views/ProfileView.vue')
     }
   ]
@@ -70,7 +70,6 @@ router.beforeEach(async (to, from, next) => {
   }
   return next()
 })
-
 
 
 

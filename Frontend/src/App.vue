@@ -1,20 +1,34 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import { computed, ref } from 'vue'
-
 import OverlayHamburguesa from './components/HamburguerMenu.vue'
 import NotifyMenu from './components/NotificationsMenu.vue'
 import ChallengesMenu from './components/ChallengesMenu.vue'
 
-
 const showOverlayIzq = ref(false);
 const showOverlayDer1 = ref(false);
 const showOverlayDer2 = ref(false);
-const logged = ref(false)
 
-// watch(sessionStorage.logged, (newValue) =>{
-//   sessionStorage.logged = newValue
-// })
+// show nav bar method 1
+// var isUserLoggedIn = ref(false);
+// const updateIsUserLoggedIn = () => {
+//     isUserLoggedIn.value = sessionStorage.getItem('logged') === 'true'
+//   }
+// watchEffect(updateIsUserLoggedIn)
+// -------
+  
+
+// show nav bar method 2
+// const state = reactive({
+//   isUserLoggedIn: sessionStorage.getItem('logged') === 'true',
+// });
+// const updateIsUserLoggedIn = () => {
+//   state.isUserLoggedIn = sessionStorage.getItem('logged') === 'true'
+//   instance.proxy.$forceUpdate
+// }
+// watchEffect(updateIsUserLoggedIn)
+// -------
+
 
 const buttonChangeColor = computed(() => ({
   active: showOverlayIzq.value
@@ -28,6 +42,9 @@ const button3ChangeColor = computed(() => ({
   active: showOverlayDer2.value
 }))
 
+// const showNavBar = computed(() => ({
+//   active: sessionStorage.getItem()
+// }))
 
 
 const changeShow = (pos, newValue) => {
@@ -56,6 +73,9 @@ const changeShow = (pos, newValue) => {
     }
   }
 }
+
+
+
 </script>
 
 <template>
@@ -64,7 +84,8 @@ const changeShow = (pos, newValue) => {
       <img style="width: 300px;" alt="Plether logo" src="@/assets/logo.png" >
     </div>
     
-    <nav class="navigation" v-if="logged">
+    <!-- <nav class="navigation" v-if="state.isUserLoggedIn" > -->
+    <nav class="navigation" v-if="$route.meta.navbar" >
       <div :class="buttonChangeColor" id="hamburguer" @click="changeShow('izq', !showOverlayIzq)">
         <!-- <p>HAM</p> -->
         <!-- <img alt="Hamburguer icon" src="@/assets/hamIcon.svg" width="125" height="125" /> -->
