@@ -42,10 +42,6 @@ const button3ChangeColor = computed(() => ({
   active: showOverlayDer2.value
 }))
 
-// const showNavBar = computed(() => ({
-//   active: sessionStorage.getItem()
-// }))
-
 
 const changeShow = (pos, newValue) => {
   if(pos === 'izq') {

@@ -79,7 +79,7 @@ async function test() {
     font-weight: 100;
     line-height: normal;
 }
-.btn-submit {
+/* .btn-submit {
   align-self: center;
   width: 8em;
   height: 3em;
@@ -93,18 +93,15 @@ async function test() {
   cursor: pointer;
 }
 
-.button-1:hover,
-.button-1:focus {
+.btn-submit:hover,
+.btn-submit:focus {
   background-color: #09839b;
-}
+} */
 
 .login {
   margin-top: 20%;
   margin-left: auto;
-  margin-right: auto;
-  /* width: 80%; */
-  /* background-color: red; */
-  
+  margin-right: auto;  
 
   & div {
     margin-top: 1em;
@@ -113,7 +110,7 @@ async function test() {
     margin-right: auto;
     font-size: 22px;
     width: fit-content;
-    color: var(--Blanquito-hueso, #F4E8D9);
+    color: #F4E8D9;
     font-family: Inter;
     font-size: 1.3em;
     font-style: normal;
@@ -132,7 +129,7 @@ async function test() {
       height: 2.3em;
       margin: auto;
       background-color: #F4E8D9;
-      color: var(--Casi-negro, #1A191B);
+      color:#1A191B;
       font-family: Inter;
       font-size: 1rem;
       font-style: normal;

@@ -5,12 +5,12 @@ import App from './App.vue'
 import router from './router'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaEye, FaEyeSlash } from "oh-vue-icons/icons"
+import { FaEye, FaEyeSlash, FaPencilAlt } from "oh-vue-icons/icons"
 
 const app = createApp(App)
 
 app.use(router)
-addIcons(FaEye, FaEyeSlash )
+addIcons(FaEye, FaEyeSlash, FaPencilAlt )
 
 app.component("v-icon", OhVueIcon)
 
