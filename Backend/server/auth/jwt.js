@@ -30,19 +30,22 @@ function verifyAccessToken(token) {
 function authenticateToken (req, res, next) {
     const token = req.cookies.SessionID
     console.log('está authenticando')
+    console.log(token)
     if(!token) {
         console.log("no existe el token")
         return res.status(401).json({error: "Not authorized"})
     }
 
     const result = verifyAccessToken(token)
-
+    console.log("está dando fallo aqui")
+    // console.log(result)
     if(!result.success) {
         return res.status(403).json({ error: result.error })
     }
 
+    console.log(result.data)
     req.user = result.data;
-    
+    req.success = true;
     next();
 }
 

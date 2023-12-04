@@ -18,7 +18,6 @@
             </div>
 
             <div>
-                <!-- <p class="text">¿Has olvidado la contraseña?</p> -->
                 <RouterLink to="/register">
                   <p class="text">¿No tienes cuenta? Regístrate</p>
                 </RouterLink>
@@ -106,7 +105,6 @@ async function test() {
     margin-bottom: 1em;
     margin-left: auto;
     margin-right: auto;
-    color: white;
     font-size: 22px;
     width: fit-content;
     color: var(--Blanquito-hueso, #F4E8D9);
@@ -119,6 +117,7 @@ async function test() {
 
     & span {
       position: absolute;
+      
     }
     & input {
       height: 2.3em;

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import axios from 'axios'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,20 +42,35 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if(!to.meta.guest){
+router.beforeEach(async (to, from, next) => {
+  if (!to.meta.guest) {
     // COMPROBAR AQUI SI ESTÁ LOGUEADO, IS NO, AL LOGIN
-    
-    if(!sessionStorage.logged) 
-    {
-      console.log("no está logeado")
-      return next({path: '/login'});
+    console.log(sessionStorage.logged)
+    if (!sessionStorage.logged) {
+      // intentar mandar petición al server con la cookie;
+      const url = 'http://localhost:5000/api/users/auth'
+      await axios
+        .post(url, {}, { withCredentials: true })
+        .then((res) => {
+          if (res.data.success) {
+            //ha tenido exito y el token existe
+            console.log('tiene login')
+            sessionStorage.logged = true;
+            console.log(sessionStorage)
+            return next()
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          console.log(err.response.data._message)
+        })
+
+      return next({ path: '/login' })
     }
-
   }
-  return next();
-
+  return next()
 })
+
 
 
 

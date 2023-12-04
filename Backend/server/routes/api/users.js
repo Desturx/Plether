@@ -104,6 +104,14 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.post('/auth', authenticateToken, async (req, res) => {
+    if(req.user !== null && req.success) {
+        res.json({success: true})
+        console.log("siii")
+    }
+
+})  
+
 router.post('/login', async (req, res) => {
     // Login steps
     // console.log("entra en login")

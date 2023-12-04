@@ -12,8 +12,9 @@
         
             <div>
                 <p>Contraseña</p>
-                <input class="form-input" v-model="password" placeholder="edit me" />
-            </div>
+                <input v-if="showPassword"  name="passwordShow" v-model="password"  placeholder="password" />
+                <input v-else type="password"  name="passwordHide" v-model="password"  placeholder="password" />
+                <span @click="showPassword = !showPassword">eye</span>            </div>
 
             <div>
                 <p>Repetir contraseña</p>
@@ -24,7 +25,11 @@
                 <button class="btn-submit">submit</button>
             </div>
 
-
+            <div>
+                <RouterLink to="/login">
+                  <p class="text">¿Ya tienes cuenta? Inicia sesión</p>
+                </RouterLink>
+            </div>
                 
         </form>
 
@@ -53,18 +58,19 @@ const showModal = ref(false);
 const username = ref('')
 const mail = ref('')
 const password = ref('')
+const showPassword = ref(false);
 const passwordCheck = ref('')
 
 
 async function registerUser() {
     const url="http://localhost:5000/api/users"
-    console.log("ESTA REGISTRANDOSE")
+    // console.log("ESTA REGISTRANDOSE")
     // const res = await axios.get(url)
     // console.log(res.data)
-    var body = new FormData();
-    body.append('name', username.value)
-    body.append('mail', mail.value)
-    body.append('password', password.value)
+    // var body = new FormData();
+    // body.append('name', username.value)
+    // body.append('mail', mail.value)
+    // body.append('password', password.value)
 
     await axios.post(url, {
         name: username.value,
@@ -100,19 +106,33 @@ watch(passwordCheck, (newPass)=> {
 
 <style scoped>
 
-
+.text {
+    color: var(--Blanquito-hueso, #F4E8D9);
+    text-align: center;
+    font-family: Inter;
+    font-size: 0.875rem;
+    font-style: italic;
+    font-weight: 100;
+    line-height: normal;
+}
 
 .btn-submit {
-  align-self: center;
-  width: 8em;
-  height: 2em;
+    align-self: center;
+    width: 8em;
+    height: 3em;
+    margin-top: 2em;
+    color: #F4E8D9;
+    background-color: #07A4C2;
+    border-radius: 0.3em;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 .register {
-  margin-top: 1.5em;
+  margin-top: 20%;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
-  background-color: red;
 
   & div {
     margin-top: 1em;
@@ -122,10 +142,26 @@ watch(passwordCheck, (newPass)=> {
     color: white;
     font-size: 22px;
     width: fit-content;
-   
+    color: var(--Blanquito-hueso, #F4E8D9);
+    font-family: Inter;
+    font-size: 1.3em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    & span {
+        position: absolute;
+    }
     & input {
-      height: 2em;
-      margin: auto;
+        height: 2.3em;
+        margin: auto;
+        background-color: #F4E8D9;
+        color: var(--Casi-negro, #1A191B);
+        font-family: Inter;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        border-radius: 0.3em;
     }
   }
 }

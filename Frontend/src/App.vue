@@ -10,7 +10,11 @@ import ChallengesMenu from './components/ChallengesMenu.vue'
 const showOverlayIzq = ref(false);
 const showOverlayDer1 = ref(false);
 const showOverlayDer2 = ref(false);
+const logged = ref(false)
 
+// watch(sessionStorage.logged, (newValue) =>{
+//   sessionStorage.logged = newValue
+// })
 
 const buttonChangeColor = computed(() => ({
   active: showOverlayIzq.value
@@ -60,7 +64,7 @@ const changeShow = (pos, newValue) => {
       <img style="width: 300px;" alt="Plether logo" src="@/assets/logo.png" >
     </div>
     
-    <nav class="navigation">
+    <nav class="navigation" v-if="logged">
       <div :class="buttonChangeColor" id="hamburguer" @click="changeShow('izq', !showOverlayIzq)">
         <!-- <p>HAM</p> -->
         <!-- <img alt="Hamburguer icon" src="@/assets/hamIcon.svg" width="125" height="125" /> -->
