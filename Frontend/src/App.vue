@@ -9,27 +9,6 @@ const showOverlayIzq = ref(false);
 const showOverlayDer1 = ref(false);
 const showOverlayDer2 = ref(false);
 
-// show nav bar method 1
-// var isUserLoggedIn = ref(false);
-// const updateIsUserLoggedIn = () => {
-//     isUserLoggedIn.value = sessionStorage.getItem('logged') === 'true'
-//   }
-// watchEffect(updateIsUserLoggedIn)
-// -------
-  
-
-// show nav bar method 2
-// const state = reactive({
-//   isUserLoggedIn: sessionStorage.getItem('logged') === 'true',
-// });
-// const updateIsUserLoggedIn = () => {
-//   state.isUserLoggedIn = sessionStorage.getItem('logged') === 'true'
-//   instance.proxy.$forceUpdate
-// }
-// watchEffect(updateIsUserLoggedIn)
-// -------
-
-
 const buttonChangeColor = computed(() => ({
   active: showOverlayIzq.value
 }))
@@ -70,7 +49,11 @@ const changeShow = (pos, newValue) => {
   }
 }
 
-
+function disableOverlays() {
+  showOverlayDer1.value = false;
+  showOverlayDer2.value = false;
+  showOverlayIzq.value = false;
+}
 
 </script>
 
@@ -83,13 +66,11 @@ const changeShow = (pos, newValue) => {
     <!-- <nav class="navigation" v-if="state.isUserLoggedIn" > -->
     <nav class="navigation" v-if="$route.meta.navbar" >
       <div :class="buttonChangeColor" id="hamburguer" @click="changeShow('izq', !showOverlayIzq)">
-        <!-- <p>HAM</p> -->
-        <!-- <img alt="Hamburguer icon" src="@/assets/hamIcon.svg" width="125" height="125" /> -->
         <img alt="Hamburguer icon" src="@/assets/svgs/hamIcon.svg" />
 
       </div>
 
-      <RouterLink to="/login">
+      <RouterLink to="/profile" @click="disableOverlays">
         <div>
           <img alt="Hamburguer icon" src="@/assets/svgs/personIcon.svg" />
         </div>
@@ -112,6 +93,7 @@ const changeShow = (pos, newValue) => {
   <OverlayHamburguesa v-if="showOverlayIzq" />
   <NotifyMenu v-if="showOverlayDer2"/>
   <ChallengesMenu v-if="showOverlayDer1"/>
+  
   <RouterView />
 </template>
 

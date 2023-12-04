@@ -1,11 +1,11 @@
 <script setup>
 // import TheRegister from '../components/Register/TheRegister.vue';
-import TheHome from '../components/home/TheHome.vue';
+import TheAvailableGames from '../components/home/TheAvailableGames.vue';
 
 </script>
 
 <template>
   <main>
-    <TheHome />
+    <TheAvailableGames />
   </main>
 </template>

@@ -73,7 +73,7 @@ async function test() {
 .text {
     color: var(--Blanquito-hueso, #F4E8D9);
     text-align: center;
-    font-family: Inter;
+    font-family: 'Inter';
     font-size: 0.875rem;
     font-style: italic;
     font-weight: 100;
@@ -111,7 +111,7 @@ async function test() {
     font-size: 22px;
     width: fit-content;
     color: #F4E8D9;
-    font-family: Inter;
+    font-family: 'Inter';
     font-size: 1.3em;
     font-style: normal;
     font-weight: 400;

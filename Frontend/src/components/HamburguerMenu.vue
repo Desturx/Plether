@@ -12,20 +12,24 @@ import Button from './buttons/OverlayButtonItem.vue'
                 <Button
                 textClass="text-big" 
                 text="Juegos" 
-                img-src="icono-mando.png" />
+                img-src="icono-mando.png"
+                destination="home" />
                 <Button
                 textClass="text-big" 
                 text="Amigos" 
-                img-src="icono-personas.png" />
+                img-src="icono-personas.png"
+                destination="" />
                 <Button
                 textClass="text-big" 
                 text="Favoritos" 
-                img-src="icono-favoritos.png" />
+                img-src="icono-favoritos.png"
+                destination="" />
 
                 <Button class="info-button"
                 textClass="text-small"
                 text="Información" 
-                img-src="icono-about.png" />
+                img-src="icono-about.png"
+                destination="" />
                 
             </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="box" @click="sendToDestination">
             <div class="overlap-group">
                 <p :class="textClass" >{{text}}</p>
                 <img class="mando-icono" alt="Mando icono" :src="'/src/assets/iconosBotones/' + imgSrc" />
@@ -8,12 +8,23 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 
-defineProps({
+const router = useRouter();
+
+
+
+const props = defineProps({
     text: String,
     imgSrc: String,
     textClass: String,
+    destination: String
 })
+
+function sendToDestination() {
+    router.push({name: props.destination})
+}
+
 </script>
   
 <style>
