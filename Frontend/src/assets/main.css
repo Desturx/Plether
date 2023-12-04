@@ -1,0 +1,76 @@
+/* @import './base.css'; */
+
+* {
+  max-width: 430px;
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  background-color: #332F33;
+
+}
+
+#app {
+  max-width: 430px;
+  /* padding: 2rem; */
+  margin: 0px;
+  font-weight: normal;
+  padding: 0;
+  background-color: #332F33;
+}
+
+/* NAVEGACIÓN - HEADER */
+header {
+  display: flex;
+  flex-direction: column;
+  background-color: #F5B324;
+}
+
+.logo, img {
+  margin-top: 0.4em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.2em;
+}
+
+.navigation {
+  & div {
+    float: right;
+    height: 2em;
+    width: 4.5em;
+    display: grid;
+    place-items: center ;
+  }
+}
+
+
+/* FIN NAVEGACIÓN - HEADER */
+
+/* FORMULARIO REGISTRO - LOGIN*/
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+/* @media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+} */
+
+/* @media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+} */
