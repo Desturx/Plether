@@ -137,9 +137,15 @@ router.post('/login', async (req, res) => {
         secure: true,
         sameSite: "None"
     });
+
+    const dataToSend = {
+        name: user.name,
+        mail: user.mail,
+        id: user._id
+    }
     
     // 5- send the 200 OK
-    res.status(200).json({success: true})
+    res.status(200).json({success: true, user: dataToSend})
     
 
 

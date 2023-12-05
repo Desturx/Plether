@@ -34,7 +34,7 @@
 import axios from 'axios';
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
-
+import { store } from '../store/store.js'
 
 const router = useRouter();
 
@@ -54,6 +54,9 @@ async function test() {
         console.log(res)
         if(res.status === 200) {
             sessionStorage.logged = true;
+            store.setMail(res.data.user.mail)
+            store.setUsername(res.data.user.name)
+            store.setId(res.data.user.id)
             router.push({name: 'home'})
         }
     })
