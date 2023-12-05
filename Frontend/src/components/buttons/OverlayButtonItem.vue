@@ -11,7 +11,7 @@
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
+const emit = defineEmits(['closeOverlays'])
 
 
 const props = defineProps({
@@ -22,6 +22,8 @@ const props = defineProps({
 })
 
 function sendToDestination() {
+    // console.log(router.currentRoute.value)
+    emit('closeOverlays')
     router.push({name: props.destination})
 }
 

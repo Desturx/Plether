@@ -90,7 +90,7 @@ function disableOverlays() {
   </header>
 
   <!-- Overlays -->
-  <OverlayHamburguesa v-if="showOverlayIzq" />
+  <OverlayHamburguesa v-if="showOverlayIzq" @close-overlays="disableOverlays"/>
   <NotifyMenu v-if="showOverlayDer2"/>
   <ChallengesMenu v-if="showOverlayDer1"/>
   

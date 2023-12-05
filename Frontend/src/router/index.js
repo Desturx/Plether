@@ -9,8 +9,13 @@ const router = createRouter({
       path: '/',
       name: 'home',
       meta: {guest:false, navbar: true}, // esto debería estar a "false"
-      // meta: {guest:true},
       component: HomeView
+    },
+    {
+      path: '/',
+      name: 'favourites',
+      meta: { guest: false, navbar: true},
+      component: () => import('../views/FavouritesView.vue')
     },
     {
       path: '/about',

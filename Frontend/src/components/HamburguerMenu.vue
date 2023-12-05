@@ -1,6 +1,7 @@
 <script setup>
 import Button from './buttons/OverlayButtonItem.vue'
 
+const emit = defineEmits(['closeOverlays'])
 </script>
 
 
@@ -9,23 +10,24 @@ import Button from './buttons/OverlayButtonItem.vue'
         <div class="overlay">
             <div class="buttons-container">
 
-                <Button
+                <Button @close-overlays="emit('closeOverlays')"
                 textClass="text-big" 
                 text="Juegos" 
                 img-src="icono-mando.png"
                 destination="home" />
-                <Button
+                <Button @close-overlays="emit('closeOverlays')"
                 textClass="text-big" 
                 text="Amigos" 
                 img-src="icono-personas.png"
                 destination="" />
-                <Button
+                <Button @close-overlays="emit('closeOverlays')"
                 textClass="text-big" 
                 text="Favoritos" 
                 img-src="icono-favoritos.png"
-                destination="" />
+                destination="favourites" />
 
-                <Button class="info-button"
+                <Button @close-overlays="emit('closeOverlays')"
+                class="info-button"
                 textClass="text-small"
                 text="Información" 
                 img-src="icono-about.png"

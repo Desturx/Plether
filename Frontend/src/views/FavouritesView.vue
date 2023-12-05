@@ -6,7 +6,7 @@
     </div> -->
     <div class="page-parent">
         <div class="title-games">
-            <h1>Juegos</h1>
+            <h1>Favoritos</h1>
         </div>
         <div class="games">
             <GameItemComponent 
@@ -38,8 +38,8 @@
 
 <script setup>
 
-    import GameItemComponent from './GameItemComponent.vue';
-    
+    // import GameItemComponent from './GameItemComponent.vue';
+    import GameItemComponent from '../components/home/GameItemComponent.vue';
     // const test = [{
     //     name: "alex",
     //     age: "22",
