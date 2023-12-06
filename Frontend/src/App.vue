@@ -1,9 +1,30 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import OverlayHamburguesa from './components/HamburguerMenu.vue'
 import NotifyMenu from './components/NotificationsMenu.vue'
 import ChallengesMenu from './components/ChallengesMenu.vue'
+// import { onMounted } from 'vue'
+// import { io } from 'socket.io-client'
+import { socket } from '@/socket'
+
+onMounted(()=>{
+    // const socket = io('http://localhost:3000')
+
+    socket.on('connect', ()=>{
+      console.log('Connected to server')
+    })
+
+    socket.on('disconnect', ()=> {
+      console.log('Disconnected from the server')
+    })
+
+    socket.on('notification created', (notification) => {
+      console.log('Notification Received: ', notification);
+    });
+
+})
+
 
 const showOverlayIzq = ref(false);
 const showOverlayDer1 = ref(false);

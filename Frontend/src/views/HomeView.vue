@@ -31,6 +31,7 @@
           </GameItemComponent>
       </div>
 
+      <button @click="test"> TESTEOOO</button>
   </div>
 
 </main>
@@ -40,17 +41,20 @@
 <script setup>
 
   // import GameItemComponent from '/GameItemComponent.vue';
-  import GameItemComponent from '../components/home/GameItemComponent.vue'
-  // const test = [{
-  //     name: "alex",
-  //     age: "22",
-  //     mail: "alex@mail.com"
-  // },
-  // {
-  //     name: "mar",
-  //     age: "22",
-  //     mail: "mar@mail.com"
-  // }]
+  import GameItemComponent from '../components/viewComponents/GameItemComponent.vue'
+
+
+  // import { socket } from '@/socket'
+  // import { store } from '@/store/store'
+
+  // function test() {
+  //   const data = {
+  //     // userId: store.id,
+  //     userId: "656c6a56108f62d5a3f0e7f9",
+  //     message: 'YEEPEEEE'
+  //   }
+  //   socket.emit('notification created', data)
+  // }
 </script>
 
 <style scoped>

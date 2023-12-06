@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 // const { UserModel, PointsModel }  = require("../../schemas/schemas")
 const { UserModel }  = require("../../schemas/schemas");
-const { json } = require('body-parser');
-// const jwtAuth = require('../../auth/jwt')
-// jwtAuth.generateAccessToken()
+
 const { generateAccessToken, authenticateToken } = require('../../auth/jwt');
 
 /*
@@ -18,12 +16,6 @@ const { generateAccessToken, authenticateToken } = require('../../auth/jwt');
 */
 // '/' = '/api/users/'
 
-// function setHeaders (req, res, next) {
-//     res.header('Access-Control-Allow-Origin', req.headers.origin);
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     console.log("AQUI ENTRA")
-//     next();
-// }
 
 // ==== GET ====
 // Get all the users
@@ -63,7 +55,16 @@ router.get('/friend-request/:id', async (req, res) => {
     if(friendRequests === null){
         return res.status(404).json({ error: 'User not found'})
     } else {
-        res.send(friendRequests)
+        res.status(200).send(friendRequests)
+    }
+})
+
+router.get('/friends/:id', authenticateToken, async (req, res) => {
+    const friends = await UserModel.findById(req.params.id).select('friends -_id')
+    if(friends === null) {
+        return res.status(200)
+    } else {
+        return res.status(200).send(friends)
     }
 })
 
@@ -173,7 +174,7 @@ router.post('/friend-request/', async (req, res) =>{
         )
 
         if(newUser != null) {
-            return res.status(200).send(newUser)
+            return res.status(200).send(newUser)//TO-DO ELIMINAR QUE MANDE AL USUARIO AL COMPLETO CON CONTRASEÑA Y TODO
         }
         res.status(400).json( {error : 'bad petition'})
         

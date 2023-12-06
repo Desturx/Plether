@@ -18,6 +18,12 @@ const router = createRouter({
       component: () => import('../views/FavouritesView.vue')
     },
     {
+      path: '/',
+      name: 'friends',
+      meta: { guest: false, navbar: true},
+      component: () => import('../views/FriendsView.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       meta: {guest:true},

@@ -39,10 +39,10 @@
 
   </div>
 
-
+<!-- 
   <TestModal v-model:show="showModal">
       <p>{{  message }}</p>
-  </TestModal>
+  </TestModal> -->
 
   <!-- <button @click="showModal = true">Open</button> -->
 
@@ -50,10 +50,11 @@
 
 <script setup>
 // import TestModal from '../modals/ModalTest.vue'
-import TestModal from '../components/modals/ModalComponent.vue'
+// import TestModal from '../components/modals/ModalComponent.vue'
 import axios from 'axios';
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router';
+import { store } from '../store/store.js'
 const router = useRouter();
 // ------
 
@@ -85,13 +86,15 @@ async function registerUser() {
       console.log(res)
       if(res.status === 200) {
           sessionStorage.logged = true;
-          router.push({name: 'about'})
+          store.setId(res.data._id)
+          store.setMail(res.data.mail)
+          store.setUsername(res.data.name)
+          router.push({name: 'home'})
       }
   })
   .catch((err) => {
       console.log(err)
       console.log(err.response.data._message)
-
   })
 }
 

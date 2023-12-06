@@ -39,7 +39,7 @@
 <script setup>
 
     // import GameItemComponent from './GameItemComponent.vue';
-    import GameItemComponent from '../components/home/GameItemComponent.vue';
+    import GameItemComponent from '../components/viewComponents/GameItemComponent.vue';
     // const test = [{
     //     name: "alex",
     //     age: "22",

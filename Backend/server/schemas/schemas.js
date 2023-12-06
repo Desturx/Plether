@@ -24,7 +24,7 @@ const UserSchema = new mongo.Schema({
 });
 
 const PointsSchema = new mongo.Schema({ 
-    userID: {
+    userId: {
         type: String,
         required: true,
     },
@@ -38,10 +38,22 @@ const PointsSchema = new mongo.Schema({
     }
 })
 
+const NotificationSchema = new mongo.Schema({
+    userId: {
+        type: String,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true,
+    },
+    read: Boolean
 
+})
 
 
 const userSchema = mongo.model("User", UserSchema);
 const pointsSchema = mongo.model("Points", PointsSchema);
+const notificationSchema = mongo.model("Notification", NotificationSchema)
 
-module.exports = {UserModel: userSchema, PointsModel: pointsSchema};
+module.exports = {UserModel: userSchema, PointsModel: pointsSchema, NotifModel: notificationSchema};

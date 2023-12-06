@@ -33,12 +33,12 @@
 </template>
 
 <script setup>
-import axios from 'axios'
+// import axios from 'axios'
 import { ref } from 'vue'
 import { store } from '../store/store.js'
 
 const editUsername = ref(false);
-const editMail = ref(false);
+// const editMail = ref(false);
 
 function changeClass() {
   if(editUsername.value) {
@@ -47,6 +47,7 @@ function changeClass() {
     return 'notEditable'
   }
 }
+
 
 
 </script>
