@@ -13,4 +13,11 @@ const url = "http://localhost:3000";
 export const socket = io(url, {query: 'userId=' + store.id});
 
 
+export const messageTypes= {
+    FRIEND_REQUEST: "friend-request",
+    ACCEPT_FRIEND_REQUEST: "a-friend-request",
+    DECLINE_FRIEND_REQUEST: "",
+    NEW_FRIEND: ""
+}
+
 

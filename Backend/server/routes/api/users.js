@@ -20,7 +20,6 @@ const { generateAccessToken, authenticateToken } = require('../../auth/jwt');
 // ==== GET ====
 // Get all the users
 router.get('/', authenticateToken, async (req, res) => {
-    // console.log('Cookie: ', req.cookies.SessionID)
     try {
         const users = await UserModel.find({});
         
@@ -82,11 +81,6 @@ router.post('/', async (req, res) => {
 
     
     try {
-        // if(existingMail !== null) {
-  
-        //     return res.send(401).json({error: "user already exists"})
-        // }
-        
         const salt = bcrypt.genSaltSync(8);
         user.password = bcrypt.hashSync(user.password, salt)
         await user.save();

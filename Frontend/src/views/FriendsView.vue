@@ -4,7 +4,6 @@
             <div class="title">
                <h1>Amigos</h1>
             </div>
-            <!-- TO-DO: PONER UNA LISTA DINÁMICA PARA GENERAR LOS COMPONENTES AMIGOS -->
             <!-- <div class="friend-list">
                 <FriendComponent name="user1"/>
                 <FriendComponent name="user2"/>
@@ -13,10 +12,11 @@
                 <FriendComponent name="user5"/>
                 <FriendComponent name="user6"/>
             </div> -->
+            <div class="friend-list">
+                <FriendComponent v-for="(friend, index) in friends" :key="index" :friend="friend"
+                :name="friend.name" />
+            </div>
             
-            
-            <!-- <component v-for="(component, index) in componentsArray" :key="index" :is="component"></component> -->
-
             <div class="btn-holder">
                 <button @click="showModal = true" class="btn-submit">
                 <v-icon  scale="1.3" name="fa-plus" class="icon" />
@@ -40,9 +40,9 @@ import TestModal from '../components/modals/modalcomponent.vue'
 import FriendComponent from '../components/viewComponents/FriendComponent.vue'
 import { store } from '../store/store.js'
 import { ref, onMounted } from 'vue'
-import { socket } from '@/socket'
+import { socket, messageTypes } from '@/socket'
 
-const friends = ref();
+const friends = ref([]);
 const showModal = ref(false)
 const friendMail = ref('')
 
@@ -65,48 +65,28 @@ async function sendRequest() {
         .then((res) => {
             console.log(res)
             // console.log("FriendID: " + friendID)
-            socket.emit('notification created', {userId: res.data._id, message: "HAS RECIBIDO UNA NUEVA SOLICITUD DE AMISTAD" })
+            
+            socket.emit('notification created', {
+                recieverId: res.data._id,
+                senderId: store.id,
+                senderName: store.username,
+                message: messageTypes.FRIEND_REQUEST
+            })
         })
         .catch((err) => {
             console.log(err)
             console.log(err.response.data._message)
         })
-        
 
-    // 2- petición a la lista de notificaciones para que al usuario le llegue
-    // url = 'http://localhost:5000/api/notifications'
-    // await axios.post(url, {
-    //     userId: friendID ,
-    //     message:"HAS RECIBIDO UNA NUEVA SOLICITUD DE AMISTAD"
-    // }, { withCredentials: true })
-    // .then((res) => {
-    //     console.log(res)
-    //     if(res.status === 201) {
-    //         const notiData = {
-    //             userId: friendID,
-    //             message: res.data.message
-    //         }
-
-    //         console.log("va a emitir la notificacion")
-            
-    //         socket.emit('notification created', notiData)
-    //     }
-    // })
-    // .catch((err)=>{
-    //     console.log(err)
-    // })
-
-
-
-    // console.log('teeesteando')
 }
+
 function getFriends() {
     const url="http://localhost:5000/api/users/friends/" + store.id;
 
     axios.get(url, {withCredentials: true})
     .then((res)=>{
         console.log(res)
-        // friends.value = res.data.friends
+        friends.value = res.data.friends
     })
     .catch( (err)=>{
         console.log(err)

@@ -31,7 +31,6 @@
           </GameItemComponent>
       </div>
 
-      <button @click="test"> TESTEOOO</button>
   </div>
 
 </main>

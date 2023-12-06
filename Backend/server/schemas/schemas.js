@@ -39,9 +39,16 @@ const PointsSchema = new mongo.Schema({
 })
 
 const NotificationSchema = new mongo.Schema({
-    userId: {
+    recieverId: {
         type: String,
         required: true
+    },
+    senderId: {
+        type: String,
+        required: true
+    },
+    senderName: {
+        type: String
     },
     message: {
         type: String,

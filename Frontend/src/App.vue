@@ -6,7 +6,8 @@ import NotifyMenu from './components/NotificationsMenu.vue'
 import ChallengesMenu from './components/ChallengesMenu.vue'
 // import { onMounted } from 'vue'
 // import { io } from 'socket.io-client'
-import { socket } from '@/socket'
+import { socket, messageTypes} from '@/socket'
+import { store } from '@/store/store'
 
 onMounted(()=>{
     // const socket = io('http://localhost:3000')
@@ -18,9 +19,12 @@ onMounted(()=>{
     socket.on('disconnect', ()=> {
       console.log('Disconnected from the server')
     })
-
-    socket.on('notification created', (notification) => {
+    
+    socket.on('notification created', async (notification) => {
       console.log('Notification Received: ', notification);
+      // if(notification.message===messageTypes.FRIEND_REQUEST){
+        //TO-DO: Ver si mando un toast o un snackbar para que se pueda ver
+      // } 
     });
 
 })
@@ -76,6 +80,8 @@ function disableOverlays() {
   showOverlayIzq.value = false;
 }
 
+
+
 </script>
 
 <template>
@@ -99,6 +105,8 @@ function disableOverlays() {
 
       <div :class="button3ChangeColor" @click="changeShow('der2', !showOverlayDer2)">
         <img alt="Hamburguer icon" src="@/assets/svgs/notifyIcon.svg" />
+        <!-- <v-icon fill="#1A191B" scale="1.3" name="io-notifications" /> -->
+
       </div>
       <div :class="button2ChangeColor" @click="changeShow('der1', !showOverlayDer1)">
         <img alt="Challenges icon" src="@/assets/svgs/challengeIcon.svg" />
@@ -112,7 +120,7 @@ function disableOverlays() {
 
   <!-- Overlays -->
   <OverlayHamburguesa v-if="showOverlayIzq" @close-overlays="disableOverlays"/>
-  <NotifyMenu v-if="showOverlayDer2"/>
+  <NotifyMenu v-if="showOverlayDer2" > </NotifyMenu>
   <ChallengesMenu v-if="showOverlayDer1"/>
   
   <RouterView />

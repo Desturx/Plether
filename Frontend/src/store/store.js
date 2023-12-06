@@ -6,6 +6,7 @@ import { reactive, watch } from 'vue'
     username: '',
     mail: '',
     id: '',
+    notifications: [],
     setUsername(value) {
         this.username = value
     },
@@ -14,6 +15,9 @@ import { reactive, watch } from 'vue'
     },
     setId(value) {
         this.id = value
+    },
+    addNewNotification(value) {
+        this.notifications.push(value)
     }
 })
 

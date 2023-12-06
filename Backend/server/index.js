@@ -74,10 +74,11 @@ io.on('connection', (socket)=>{
     })
 
     socket.on('notification created', async (data)=>{
+        
         try{
             const notification = new NotifModel(data);
             await notification.save();
-            io.to(data.userId).emit('notification created', notification)
+            io.to(data.recieverId).emit('notification created', notification)
         } catch (error) {
             console.log(error)
         }
