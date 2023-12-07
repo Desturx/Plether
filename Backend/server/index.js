@@ -65,12 +65,22 @@ const { NotifModel }  = require("./schemas/schemas");
 
 io.on('connection', (socket)=>{
     const userId = socket.handshake.query.userId;
-    socket.join(userId)
+    // socket.join(userId)
     
-    console.log("A user connected")
+    // console.log("A user connected to: ", userId)
     
     socket.on('disconnect', ()=> {
         console.log('A user disconnected')
+    })
+
+    socket.on('join room', (userId)=>{
+        console.log("se une a la room: ", userId)
+        socket.join(userId)
+    })
+    
+    socket.on('leave room', (userId)=>{
+        console.log("se sale de la room: ", userId)
+        socket.leave('roomName');
     })
 
     socket.on('notification created', async (data)=>{

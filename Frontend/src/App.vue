@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch} from 'vue'
 import OverlayHamburguesa from './components/HamburguerMenu.vue'
 import NotifyMenu from './components/NotificationsMenu.vue'
 import ChallengesMenu from './components/ChallengesMenu.vue'
@@ -12,14 +12,20 @@ import { store } from '@/store/store'
 onMounted(()=>{
     // const socket = io('http://localhost:3000')
 
+    if(store.id !== "") {
+      console.log("se ha emitido el join room")
+      socket.connect();
+    }
+    
     socket.on('connect', ()=>{
       console.log('Connected to server')
     })
 
+
     socket.on('disconnect', ()=> {
       console.log('Disconnected from the server')
     })
-    
+
     socket.on('notification created', async (notification) => {
       console.log('Notification Received: ', notification);
       reloadNotis.value = !reloadNotis.value
@@ -29,6 +35,27 @@ onMounted(()=>{
     });
 
 })
+
+watch(
+  ()=> store.id,
+  (newId, oldId)=>{
+    console.log('old id is: ', oldId)
+    console.log('new id is: ', newId)
+    socket.connect();
+    socket.emit('join room', newId)
+    // abandonar la room anterior, unirse a la nueva
+  }
+)
+
+// watch(store, (newStore)=>{
+//   socket.emit('join room', newStore.id)
+// })
+
+function test() {
+    console.log(store.id)
+    // store.setId('aaa')
+    // console.log(store.id)
+}
 
 
 const showOverlayIzq = ref(false);
@@ -126,6 +153,8 @@ function disableOverlays() {
   <ChallengesMenu v-if="showOverlayDer1" />
   
   <RouterView />
+
+  <button @click="test">TESTEO</button>
 </template>
 
 

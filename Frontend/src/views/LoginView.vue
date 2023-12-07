@@ -32,9 +32,10 @@
   
 <script setup>
 import axios from 'axios';
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { store } from '../store/store.js'
+
 
 const router = useRouter();
 

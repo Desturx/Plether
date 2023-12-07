@@ -27,6 +27,7 @@ if (savedStore) {
 }
 
 watch(store, (newstore) => {
+    console.log()
     localStorage.setItem('store', JSON.stringify(newstore))
 }, {deep: true})
 
