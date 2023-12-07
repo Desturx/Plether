@@ -22,6 +22,7 @@ onMounted(()=>{
     
     socket.on('notification created', async (notification) => {
       console.log('Notification Received: ', notification);
+      reloadNotis.value = !reloadNotis.value
       // if(notification.message===messageTypes.FRIEND_REQUEST){
         //TO-DO: Ver si mando un toast o un snackbar para que se pueda ver
       // } 
@@ -33,6 +34,7 @@ onMounted(()=>{
 const showOverlayIzq = ref(false);
 const showOverlayDer1 = ref(false);
 const showOverlayDer2 = ref(false);
+const reloadNotis = ref(false)
 
 const buttonChangeColor = computed(() => ({
   active: showOverlayIzq.value
@@ -120,8 +122,8 @@ function disableOverlays() {
 
   <!-- Overlays -->
   <OverlayHamburguesa v-if="showOverlayIzq" @close-overlays="disableOverlays"/>
-  <NotifyMenu v-if="showOverlayDer2" > </NotifyMenu>
-  <ChallengesMenu v-if="showOverlayDer1"/>
+  <NotifyMenu v-if="showOverlayDer2" :key="reloadNotis"> </NotifyMenu>
+  <ChallengesMenu v-if="showOverlayDer1" />
   
   <RouterView />
 </template>

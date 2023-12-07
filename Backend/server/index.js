@@ -83,6 +83,10 @@ io.on('connection', (socket)=>{
             console.log(error)
         }
     })
+
+    socket.on('accept friend request', (data)=> {
+        io.to(data.recieverId).emit('accept friend request', data)
+    })
 });
 
 server.listen(3000, ()=>{

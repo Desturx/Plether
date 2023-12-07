@@ -49,6 +49,13 @@ const friendMail = ref('')
 
 onMounted(()=>{
     getFriends();
+
+    socket.on('accept friend request', (data)=>{
+        console.log('Friend request accepted', data)
+        getFriends();
+    })
+    
+
 })
 
 async function sendRequest() {
@@ -72,6 +79,7 @@ async function sendRequest() {
                 senderName: store.username,
                 message: messageTypes.FRIEND_REQUEST
             })
+            
         })
         .catch((err) => {
             console.log(err)

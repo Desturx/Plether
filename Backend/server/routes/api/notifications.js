@@ -30,4 +30,21 @@ router.get('/:userId', authenticateToken, async (req, res) => {
     }
 });
 
+router.delete('/:id', authenticateToken, async(req,res)=> {
+    const { id } = req.params
+    
+    try {
+        const deletedNotification = await NotifModel.findByIdAndDelete(id)
+
+        if(!deletedNotification) {
+            return res.status(404).send({message: 'notification not found'})
+        }
+
+        res.status(200).send({ message: 'Notification deleted', deletedNotification})
+
+    } catch(err) {
+        res.status(500).send(error)
+    }
+})
+
 module.exports = router;

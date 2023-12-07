@@ -181,6 +181,8 @@ router.post('/friend-request/', async (req, res) =>{
 // Accept an user's friend request.
 router.post('/accept-request', async (req, res) => {
     //T0-DO terminar de gestionar los errores y comprobar que funciona bien del todo
+    // const { userId } = req.body
+    // userID, requestId
     try{
         var friendRequest = await UserModel.findOne({_id: req.body.userId }).select('friendRequests -_id')    
         const newFriend = friendRequest.friendRequests.find(e => e._id.toString() === req.body.requestId)
@@ -193,9 +195,23 @@ router.post('/accept-request', async (req, res) => {
                 $push: { friends: newFriend },
                 $pull: { friendRequests: { _id: new mongoose.Types.ObjectId(req.body.requestId) } },
             },
-            { safe:true,new: true }
+            { select:'-password',safe:true,new: true }
         )
-        res.send(newUser)
+
+        const newFriend2 = {
+            _id: new mongoose.Types.ObjectId(),
+            name: newUser.name,
+            mail: newUser.mail
+        }
+
+        const newUser2 = await UserModel.findOneAndUpdate(
+            { mail: newFriend.mail  },
+            {
+                $push: {friends: newFriend2 }
+            },
+            {select: '-password', safe:true, new: true}
+        )
+        res.send(newUser2)
 
     } catch(error) {
         res.status(500).send(error)
