@@ -23,21 +23,6 @@ const UserSchema = new mongo.Schema({
     },
 });
 
-const PointsSchema = new mongo.Schema({ 
-    userId: {
-        type: String,
-        required: true,
-    },
-    gameID: { 
-        type: String,
-        required: true,
-    },
-    points: {
-        type: Number,
-        required: true,
-    }
-})
-
 const NotificationSchema = new mongo.Schema({
     recieverId: {
         type: String,
@@ -57,6 +42,33 @@ const NotificationSchema = new mongo.Schema({
     read: Boolean
 
 })
+
+const GameSchema = new mongo.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+    },
+})
+
+const PointsSchema = new mongo.Schema({ 
+    userId: {
+        type: String,
+        required: true,
+    },
+    gameID: { 
+        type: String,
+        required: true,
+    },
+    points: {
+        type: Number,
+        required: true,
+    }
+})
+
+
 
 
 const userSchema = mongo.model("User", UserSchema);

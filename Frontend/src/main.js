@@ -16,6 +16,8 @@ import {
 
 const app = createApp(App)
 
+// defineIonPhaser(window);
+
 app.use(router)
 addIcons(
     FaEye, FaEyeSlash, MdModeeditoutline,
@@ -28,3 +30,5 @@ addIcons(
 app.component("v-icon", OhVueIcon)
 
 app.mount('#app')
+
+

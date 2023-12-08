@@ -8,25 +8,31 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      meta: {guest:false, navbar: true}, // esto debería estar a "false"
+      meta: {guest:false, navbar: true, header:true}, // esto debería estar a "false"
       component: HomeView
     },
     {
       path: '/',
       name: 'favourites',
-      meta: { guest: false, navbar: true},
+      meta: { guest: false, navbar: true, header: true},
       component: () => import('../views/FavouritesView.vue')
+    },
+    {
+      path: '/playGame',
+      name: 'playGame',
+      meta: { guest: false, navbar: true, header: false},
+      component: () => import('../views/PlayGameView.vue')
     },
     {
       path: '/',
       name: 'friends',
-      meta: { guest: false, navbar: true},
+      meta: { guest: false, navbar: true, header: true},
       component: () => import('../views/FriendsView.vue')
     },
     {
       path: '/games/:id',
       name: 'games',
-      meta: { guest: false, navbar: true },
+      meta: { guest: false, navbar: true, header: false},
       component: ()=> import('../views/GameView.vue')
     },
     {

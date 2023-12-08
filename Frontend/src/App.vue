@@ -107,7 +107,7 @@ function disableOverlays() {
 </script>
 
 <template>
-  <header>
+  <header v-if="$route.meta.header">
     <div class="logo">
       <img style="width: 300px;" alt="Plether logo" src="@/assets/logo.png" >
     </div>
