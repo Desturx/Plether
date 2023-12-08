@@ -48,10 +48,6 @@ watch(
   }
 )
 
-// watch(store, (newStore)=>{
-//   socket.emit('join room', newStore.id)
-// })
-
 
 
 

@@ -24,6 +24,12 @@ const router = createRouter({
       component: () => import('../views/FriendsView.vue')
     },
     {
+      path: '/games/:id',
+      name: 'games',
+      meta: { guest: false, navbar: true },
+      component: ()=> import('../views/GameView.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       meta: {guest:true},

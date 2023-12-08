@@ -10,7 +10,8 @@ import {
     FaEye, FaEyeSlash, MdModeeditoutline,
     MdEditoffRound, HiChatAlt2, BiTrashFill,
     FaPlus, FaUserFriends, MdCheckRound,
-    MdCloseRound, IoNotifications
+    MdCloseRound, IoNotifications, RiArrowGoBackFill,
+    MdStaroutlineTwotone, MdStar 
 } from "oh-vue-icons/icons"
 
 const app = createApp(App)
@@ -20,7 +21,8 @@ addIcons(
     FaEye, FaEyeSlash, MdModeeditoutline,
     MdEditoffRound, HiChatAlt2, BiTrashFill,
     FaPlus, FaUserFriends, MdCheckRound,
-    MdCloseRound, IoNotifications 
+    MdCloseRound, IoNotifications, RiArrowGoBackFill,
+    MdStaroutlineTwotone, MdStar 
 )
 
 app.component("v-icon", OhVueIcon)

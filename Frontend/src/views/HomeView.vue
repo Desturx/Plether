@@ -11,7 +11,8 @@
       </div>
       <div class="games">
           <GameItemComponent 
-          imgSrc="src/assets/games/atomic-heart.jpg">
+          imgSrc="src/assets/games/atomic-heart.jpg"
+          @click="gotoComponent('234')">
 
           </GameItemComponent>
 
@@ -41,7 +42,13 @@
 
   // import GameItemComponent from '/GameItemComponent.vue';
   import GameItemComponent from '../components/viewComponents/GameItemComponent.vue'
+  import { useRouter } from 'vue-router';
+  const router = useRouter();
 
+
+  function gotoComponent(gameId) {
+    router.push({path: '/games/'+ gameId})
+  }
 
   // import { socket } from '@/socket'
   // import { store } from '@/store/store'
