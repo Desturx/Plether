@@ -10,7 +10,7 @@
                 </div>
                 <div class="item-bottom">
                     <v-icon fill="#f4e8d9" scale="2" name="md-check-round"  @click="acceptFriendRequest(notification)"/>
-                    <v-icon fill="#f4e8d9" scale="2" name="md-close-round" @click="test(notification)"/>
+                    <v-icon fill="#f4e8d9" scale="2" name="md-close-round" @click="declineFriendRequest(notification)"/>
                 </div>
             </div>
 
@@ -24,6 +24,7 @@ import axios from 'axios';
 import { store } from '@/store/store'
 import { messageTypes, socket } from '@/socket'
 
+// TO-DO: refactorizar el codigo para hacer que todas las páginas que contengan peticiones a la api tengan esta constante
 const API = "http://localhost:5000/api"
 
 const notifications = ref([])
@@ -32,7 +33,6 @@ onMounted(()=>{
     getNotifications()
 })
 
-// TO-DO: Hacer que se puedan aceptar o rechazar las solicitudes de alguna manera
 async function getNotifications() {
     console.log(store.id)
     const url= API + "/notifications/" + store.id;
@@ -67,10 +67,6 @@ function test(notification) {
 }
 
 async function acceptFriendRequest(notification) {
-    // TO-DO: para aceptar, hay que enviar la solicitud a aceptar friend request y luego eliminar la notificacion
-    // de la ruta de notificaciones.
-    
-
     // first we send a petition to get the friend requests
     var url= API + "/users/friend-request/" + store.id
     let found = null;
@@ -129,6 +125,63 @@ async function acceptFriendRequest(notification) {
             console.log(err);
         })
     }
+
+}
+
+
+async function declineFriendRequest(notification) {
+    
+    var url= API + "/users/friend-request/" + store.id
+    let found = null;
+    
+    await axios.get(url, {withCredentials: true})
+    .then((res)=>{
+        // console.log("lo que saca del server")
+        if(res.status === 200) { // we check the status code is "OK"
+            console.log(res);
+            // we get the friend request related to button pressed when the function was called
+            found = res.data.friendRequests.find((element)=>{
+                return element.name === notification.senderName
+            })
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+
+    var deleteNotification = false
+    url= API + "/users/decline-request"
+    await axios.post(url, {
+        userId: store.id,
+        requestId: found._id
+    }, {withCredentials: true})
+    .then((res)=>{
+        if(res.status === 200) {
+            deleteNotification = true
+            // TO-DO: se podría mandar un evento con el socket para decir que se ha rechazado.
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+
+
+    if(deleteNotification) {
+        url = API + "/notifications/" + notification._id
+        await axios.delete(url, {withCredentials:true})
+        .then((res)=>{
+            console.log(res);
+            var index = notifications.value.indexOf(notification)
+
+            notifications.value.splice(index, 1)
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
 
 }
 

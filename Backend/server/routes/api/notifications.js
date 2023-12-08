@@ -22,13 +22,14 @@ router.post('/', async (req, res) => {
 
 router.get('/:userId', authenticateToken, async (req, res) => {
     try {
-        console.log("aqui entra");
+        // console.log("aqui entra");
         const notifications = await NotifModel.find({ recieverId: req.params.userId });
         res.status(200).send(notifications);
     } catch (error) {
         res.status(500).send(error);
     }
 });
+
 
 router.delete('/:id', authenticateToken, async(req,res)=> {
     const { id } = req.params

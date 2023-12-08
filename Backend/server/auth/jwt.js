@@ -29,7 +29,7 @@ function verifyAccessToken(token) {
 
 function authenticateToken (req, res, next) {
     const token = req.cookies.SessionID
-    console.log('está authenticando')
+    // console.log('está authenticando')
 
     if(!token) {
         console.log("no existe el token")

@@ -180,7 +180,8 @@ router.post('/friend-request/', async (req, res) =>{
 
 // Accept an user's friend request.
 router.post('/accept-request', async (req, res) => {
-    //T0-DO terminar de gestionar los errores y comprobar que funciona bien del todo
+    //T0-DO: se puede mejorar el código de la petición, creo que es innecesario la primera
+    // variable que se llama "friendRequest", aunque en realidad es una comprobación de si existe, (mirarlo mejor)
     try{
         var friendRequest = await UserModel.findOne({_id: req.body.userId }).select('friendRequests -_id')    
         const newFriend = friendRequest.friendRequests.find(e => e._id.toString() === req.body.requestId)
@@ -220,20 +221,17 @@ router.post('/accept-request', async (req, res) => {
 router.post('/decline-request', async (req, res) => {
 
     try{
-        var friendRequest = await UserModel.findOne({_id: req.body.userId, "friendRequests._id":req.body.requestId}).select('friendRequests -_id')    
+        // var friendRequest = await UserModel.findOne({_id: req.body.userId, "friendRequests._id":req.body.requestId}).select('friendRequests -_id')    
 
-        if(friendRequest !== null) {
-            const newUser = await UserModel.findOneAndUpdate(
-                { _id: req.body.userId },
-                { 
-                    $pull: { friendRequests: { _id: new mongoose.Types.ObjectId(req.body.requestId) } },
-                },
-                { safe:true,new: true }
-            )
-            return res.status(200).send(newUser)
-        }
-        else 
-            return res.status(400).json({error: 'No existe la petición solicitada'})
+        const newUser = await UserModel.findOneAndUpdate(
+            { _id: req.body.userId },
+            { 
+                $pull: { friendRequests: { _id: new mongoose.Types.ObjectId(req.body.requestId) } },
+            },
+            { safe:true,new: true }
+        )
+      
+        res.status(200).send(newUser)
 
     } catch(error) {
         res.status(500).send(error)
