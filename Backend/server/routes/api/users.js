@@ -73,9 +73,9 @@ router.post('/', async (req, res) => {
     
     const user = new UserModel(req.body);
     const existingMail = await UserModel.findOne({mail: req.body.mail})
-    console.log(existingMail)
+    // console.log(existingMail)
     if(existingMail !== null) {
-        console.log("hehehehe")
+        // console.log("hehehehe")
         return res.status(401).json({error: 'user already exists'})
     } 
 
@@ -102,7 +102,7 @@ router.post('/', async (req, res) => {
 router.post('/auth', authenticateToken, async (req, res) => {
     if(req.user !== null && req.success) {
         res.json({success: true})
-        console.log("siii")
+        // console.log("siii")
     }
 
 })  
@@ -118,7 +118,7 @@ router.post('/login', async (req, res) => {
     }
     // 2- check if the password exists, if isnt valid send a 401 Invalid email or password\
     var passOk = bcrypt.compareSync(req.body.password, user.password)
-    console.log(passOk)
+    // console.log(passOk)
     if(!passOk) {
         return res.status(401).json({error: "invalid email or password. Try again"})
     }
@@ -277,7 +277,6 @@ router.post('/test', async (req, res) => {
 
 // ==== DELETE ====
 router.delete('/:id', async (req, res) => {
-    
     try {
        await UserModel.deleteOne({_id: req.params.id})
        res.status(200).send({

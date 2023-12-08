@@ -6,7 +6,7 @@ import NotifyMenu from './components/NotificationsMenu.vue'
 import ChallengesMenu from './components/ChallengesMenu.vue'
 // import { onMounted } from 'vue'
 // import { io } from 'socket.io-client'
-import { socket, messageTypes} from '@/socket'
+import { socket } from '@/socket'
 import { store } from '@/store/store'
 
 onMounted(()=>{
@@ -51,11 +51,7 @@ watch(
 //   socket.emit('join room', newStore.id)
 // })
 
-function test() {
-    console.log(store.id)
-    // store.setId('aaa')
-    // console.log(store.id)
-}
+
 
 
 const showOverlayIzq = ref(false);
@@ -154,7 +150,6 @@ function disableOverlays() {
   
   <RouterView />
 
-  <button @click="test">TESTEO</button>
 </template>
 
 
