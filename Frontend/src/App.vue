@@ -15,6 +15,7 @@ onMounted(()=>{
     if(store.id !== "") {
       console.log("se ha emitido el join room")
       socket.connect();
+      socket.emit('join room', store.id)
     }
     
     socket.on('connect', ()=>{

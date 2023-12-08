@@ -7,7 +7,7 @@
             <h3>{{ name }}</h3>
             <div class="icons">
                 <v-icon scale="2" name="hi-chat-alt-2" class="icon" />
-                <v-icon scale="2" name="bi-trash-fill" class="icon" />
+                <v-icon scale="2" name="bi-trash-fill" class="icon" @click="$emit('deleteFriend')" />
             </div>
         </div>
     </div>
@@ -21,6 +21,10 @@ defineProps({
     name: String
 })
 
+
+function deleteFriend(){
+    console.log("deleting friend")
+}
 </script>
 
 <style scoped>

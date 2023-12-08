@@ -14,7 +14,7 @@
             </div> -->
             <div class="friend-list">
                 <FriendComponent v-for="(friend, index) in friends" :key="index" :friend="friend"
-                :name="friend.name" />
+                :name="friend.name" @delete-friend="deleteFriend(friend)"/>
             </div>
             
             <div class="btn-holder">
@@ -45,6 +45,7 @@ import { socket, messageTypes } from '@/socket'
 const friends = ref([]);
 const showModal = ref(false)
 const friendMail = ref('')
+
 
 
 onMounted(()=>{
@@ -98,6 +99,25 @@ function getFriends() {
     })
     .catch( (err)=>{
         console.log(err)
+    })
+}
+
+function deleteFriend(friend) {
+    // console.log("testeando el friend: ", friend)
+    const url="http://localhost:5000/api/users/delete-friend"
+    axios.post(url, {
+        userId: store.id,
+        friendId: friend._id
+    }, { withCredentials: true})
+    .then((res)=>{
+        if(res.status === 200){
+            var index = friends.value.indexOf(friend)
+            friends.value.splice(index, 1)
+        }
+
+    })
+    .catch(()=>{
+
     })
 }
 

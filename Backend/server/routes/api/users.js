@@ -181,8 +181,6 @@ router.post('/friend-request/', async (req, res) =>{
 // Accept an user's friend request.
 router.post('/accept-request', async (req, res) => {
     //T0-DO terminar de gestionar los errores y comprobar que funciona bien del todo
-    // const { userId } = req.body
-    // userID, requestId
     try{
         var friendRequest = await UserModel.findOne({_id: req.body.userId }).select('friendRequests -_id')    
         const newFriend = friendRequest.friendRequests.find(e => e._id.toString() === req.body.requestId)
@@ -242,6 +240,24 @@ router.post('/decline-request', async (req, res) => {
     }
 }) 
 
+router.post('/delete-friend', async (req, res)=> {
+    try{
+        const { userId, friendId } = req.body
+        
+        var user = await UserModel.findByIdAndUpdate(
+            { _id: userId },
+            {
+                $pull: { friends: {  _id: new mongoose.Types.ObjectId(friendId) }}
+            },
+            { safe:true, new:true }
+        )
+        
+        res.status(200).send(user)
+
+    } catch(error) {
+        return res.status(400).json({error: 'No existe la petición solicitada'})
+    }
+})
 
 
 router.post('/test', async (req, res) => {
