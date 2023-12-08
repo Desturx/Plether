@@ -6,14 +6,14 @@
     // })
     
 // var socket = io.connect('http://localhost:3000', { query: 'userId=' + userId });
+// export const socket = io(url, {query: 'userId=' + store.id, debug: true, autoConnect: false});
 
+// import { store } from '@/store/store'
 import { io } from 'socket.io-client'
-import { store } from '@/store/store'
 
 const url = "http://localhost:3000";
 
-export const socket = io(url, {query: 'userId=' + store.id, debug: true, autoConnect: false});
-
+export const socket = io(url, {debug: true, autoConnect: false})
 
 export const messageTypes= {
     FRIEND_REQUEST: "friend-request",

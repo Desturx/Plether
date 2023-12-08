@@ -64,7 +64,7 @@ const { NotifModel }  = require("./schemas/schemas");
 // })
 
 io.on('connection', (socket)=>{
-    const userId = socket.handshake.query.userId;
+    // const userId = socket.handshake.query.userId;
     // socket.join(userId)
     
     // console.log("A user connected to: ", userId)
