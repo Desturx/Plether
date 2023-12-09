@@ -72,7 +72,13 @@ const PointsSchema = new mongo.Schema({
 
 
 const userSchema = mongo.model("User", UserSchema);
-const pointsSchema = mongo.model("Points", PointsSchema);
-const notificationSchema = mongo.model("Notification", NotificationSchema)
+const pointsSchema = mongo.model("Point", PointsSchema);
+const notificationSchema = mongo.model("Notification", NotificationSchema);
+const gameSchema = mongo.model("Game", GameSchema);
 
-module.exports = {UserModel: userSchema, PointsModel: pointsSchema, NotifModel: notificationSchema};
+module.exports = {
+    UserModel: userSchema,
+    PointsModel: pointsSchema,
+    NotifModel: notificationSchema,
+    GameModel: gameSchema 
+};

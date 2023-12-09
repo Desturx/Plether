@@ -10,26 +10,17 @@
           <h1>Juegos</h1>
       </div>
       <div class="games">
-          <GameItemComponent 
+        <GameItemComponent v-for="(game, index) in games" :key="index" :game="game"
+        @click="gotoComponent(game._id)"
+        :imgSrc="game.image"/>
+          <!-- <GameItemComponent 
           imgSrc="src/assets/games/atomic-heart.jpg"
-          @click="gotoComponent('234')">
-
-          </GameItemComponent>
+          @click="gotoComponent('234')" />
 
           <GameItemComponent
-          imgSrc="src/assets/games/armored-core-6.jpg">
+          imgSrc="src/assets/games/armored-core-6.jpg" /> -->
+       
 
-          </GameItemComponent>
-
-          <GameItemComponent
-          imgSrc="src/assets/games/digimon survive.jpg">
-
-          </GameItemComponent>
-
-          <GameItemComponent
-          imgSrc="src/assets/games/armored-core-6.jpg">
-
-          </GameItemComponent>
       </div>
 
   </div>
@@ -43,11 +34,32 @@
   // import GameItemComponent from '/GameItemComponent.vue';
   import GameItemComponent from '../components/viewComponents/GameItemComponent.vue'
   import { useRouter } from 'vue-router';
+  import { ref, onMounted } from 'vue'
+  import axios from 'axios';
+  
   const router = useRouter();
+  const games = ref([]);
+  const API = "http://localhost:5000/api"
 
+  onMounted(()=>{
+    getGames()
+  })
 
   function gotoComponent(gameId) {
     router.push({path: '/games/'+ gameId})
+  }
+
+  async function getGames() {
+    const url= API + "/games"
+    await axios.get(url, {withCredentials: true})
+    .then((res)=>{
+      // console.log(res)
+      games.value = res.data
+      console.log(games.value)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
   }
 
   // import { socket } from '@/socket'

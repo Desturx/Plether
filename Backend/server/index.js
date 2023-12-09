@@ -30,16 +30,16 @@ db.once("open", function() {
 })
 
 // ROUTES
-
-
 const users = require('./routes/api/users');
 const points = require('./routes/api/points');
 const notifications = require('./routes/api/notifications');
+const games = require('./routes/api/games')
 
 
 app.use('/api/users', users)
 app.use('/api/points', points)
 app.use('/api/notifications', notifications)
+app.use('/api/games', games)
 
 
 

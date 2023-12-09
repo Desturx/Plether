@@ -21,6 +21,17 @@ import { reactive, watch } from 'vue'
     }
 })
 
+const starsGame = reactive({
+    points: '',
+    isGameOver: false,
+    setPoints(value) {
+        this.points = value
+    },
+    setGameOver(value) {
+        this.isGameOver = value
+    }
+})
+
 let savedStore = localStorage.getItem('store')
 if (savedStore) {
    Object.assign(store, JSON.parse(savedStore))
@@ -31,4 +42,4 @@ watch(store, (newstore) => {
     localStorage.setItem('store', JSON.stringify(newstore))
 }, {deep: true})
 
-export { store }
+export { store, starsGame}

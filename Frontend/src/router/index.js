@@ -18,10 +18,10 @@ const router = createRouter({
       component: () => import('../views/FavouritesView.vue')
     },
     {
-      path: '/playGame',
-      name: 'playGame',
+      path: '/collectStars',
+      name: 'collectStars',
       meta: { guest: false, navbar: true, header: false},
-      component: () => import('../views/PlayGameView.vue')
+      component: () => import('../views/PlayCollectStarsView.vue')
     },
     {
       path: '/',
@@ -32,13 +32,13 @@ const router = createRouter({
     {
       path: '/games/:id',
       name: 'games',
-      meta: { guest: false, navbar: true, header: false},
+      meta: { guest: false, navbar: true, header: true},
       component: ()=> import('../views/GameView.vue')
     },
     {
       path: '/about',
       name: 'about',
-      meta: {guest:true},
+      meta: {guest:true, navbar: false, header: true},
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -47,19 +47,19 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      meta: {guest: true, navbar: false},
+      meta: {guest: true, navbar: false, header: true},
       component: () => import('../views/LoginView.vue')
     },
     {
       path: '/register',
       name: 'register',
-      meta: {guest: true, navbar: false},
+      meta: {guest: true, navbar: false, header: true},
       component: () => import('../views/RegisterView.vue')
     },
     {
       path: '/profile',
       name: 'profile',
-      meta: {guest: false, navbar: true},
+      meta: {guest: false, navbar: true, header: true},
       component: () => import('../views/ProfileView.vue')
     }
   ]
