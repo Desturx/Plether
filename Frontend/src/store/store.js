@@ -6,6 +6,7 @@ import { reactive, watch } from 'vue'
     username: '',
     mail: '',
     id: '',
+    idStarsGame: '',
     friendRequests: [],
     setUsername(value) {
         this.username = value
@@ -21,6 +22,8 @@ import { reactive, watch } from 'vue'
     }
 })
 
+
+
 const starsGame = reactive({
     points: '',
     isGameOver: false,
@@ -29,7 +32,7 @@ const starsGame = reactive({
     },
     setGameOver(value) {
         this.isGameOver = value
-    }
+    },
 })
 
 let savedStore = localStorage.getItem('store')
@@ -38,8 +41,9 @@ if (savedStore) {
 }
 
 watch(store, (newstore) => {
-    console.log()
+    // console.log()
     localStorage.setItem('store', JSON.stringify(newstore))
 }, {deep: true})
 
-export { store, starsGame}
+
+export { store, starsGame }

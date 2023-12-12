@@ -35,6 +35,7 @@
   import GameItemComponent from '../components/viewComponents/GameItemComponent.vue'
   import { useRouter } from 'vue-router';
   import { ref, onMounted } from 'vue'
+  import { store } from '@/store/store'
   import axios from 'axios';
   
   const router = useRouter();
@@ -55,6 +56,13 @@
     .then((res)=>{
       // console.log(res)
       games.value = res.data
+      res.data.forEach(element => {
+        if(element.name === "Collect Stars") {
+          store.idStarsGame = element._id
+          // console.log("el store id: ", store.idStarsGame)
+          // console.log("El del objeto: ", element._id)
+        }
+      });
       console.log(games.value)
     })
     .catch((err)=>{

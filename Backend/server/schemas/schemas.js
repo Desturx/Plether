@@ -43,6 +43,29 @@ const NotificationSchema = new mongo.Schema({
 
 })
 
+const ChallengeSchema = new mongo.Schema({
+    recieverId: {
+        type: String,
+        required: true
+    },
+    senderId: {
+        type: String,
+        required: true
+    },
+    recieverName: {
+        type: String,
+    },
+    senderName: {
+        type: String,
+    },
+    senderPoints: {
+        type: Number
+    },
+    recieverPoints: {
+        type: Number
+    }
+})
+
 const GameSchema = new mongo.Schema({
     name: {
         type: String,
@@ -58,13 +81,17 @@ const PointsSchema = new mongo.Schema({
         type: String,
         required: true,
     },
-    gameID: { 
+    gameId: { 
         type: String,
         required: true,
     },
     points: {
         type: Number,
         required: true,
+    },
+    date: {
+        type: Date,
+        required: true
     }
 })
 
@@ -75,10 +102,12 @@ const userSchema = mongo.model("User", UserSchema);
 const pointsSchema = mongo.model("Point", PointsSchema);
 const notificationSchema = mongo.model("Notification", NotificationSchema);
 const gameSchema = mongo.model("Game", GameSchema);
+const challengeSchema = mongo.model("Challenge", ChallengeSchema)
 
 module.exports = {
     UserModel: userSchema,
     PointsModel: pointsSchema,
     NotifModel: notificationSchema,
-    GameModel: gameSchema 
+    GameModel: gameSchema,
+    ChallengeModel: challengeSchema,
 };

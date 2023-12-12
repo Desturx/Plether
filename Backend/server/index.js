@@ -34,12 +34,14 @@ const users = require('./routes/api/users');
 const points = require('./routes/api/points');
 const notifications = require('./routes/api/notifications');
 const games = require('./routes/api/games')
+const challenges = require('./routes/api/challenges')
 
 
 app.use('/api/users', users)
 app.use('/api/points', points)
 app.use('/api/notifications', notifications)
 app.use('/api/games', games)
+app.use('/api/challenges', challenges)
 
 
 
@@ -88,6 +90,7 @@ io.on('connection', (socket)=>{
         try{
             const notification = new NotifModel(data);
             await notification.save();
+            console.log("se va a emitir al usuario del id: ", data.recieverId)
             io.to(data.recieverId).emit('notification created', notification)
         } catch (error) {
             console.log(error)
@@ -96,6 +99,10 @@ io.on('connection', (socket)=>{
 
     socket.on('accept friend request', (data)=> {
         io.to(data.recieverId).emit('accept friend request', data)
+    })
+
+    socket.on('challenge friend', (data)=>{
+        io.to(data.recieverId).emit('challenge friend', data)
     })
 });
 

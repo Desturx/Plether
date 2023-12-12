@@ -7,7 +7,7 @@ const { authenticateToken } = require('../../auth/jwt');
 // const { generateAccessToken, authenticateToken } = require('../../auth/jwt');
 
 
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     const { recieverId, senderId, message, senderName } = req.body;
 
     try {

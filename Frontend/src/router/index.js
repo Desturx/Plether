@@ -18,12 +18,6 @@ const router = createRouter({
       component: () => import('../views/FavouritesView.vue')
     },
     {
-      path: '/collectStars',
-      name: 'collectStars',
-      meta: { guest: false, navbar: true, header: false},
-      component: () => import('../views/PlayCollectStarsView.vue')
-    },
-    {
       path: '/',
       name: 'friends',
       meta: { guest: false, navbar: true, header: true},
@@ -34,6 +28,30 @@ const router = createRouter({
       name: 'games',
       meta: { guest: false, navbar: true, header: true},
       component: ()=> import('../views/GameView.vue')
+    },
+    {
+      path: '/games/:id/challenge',
+      name: 'challenge',
+      meta: { guest: false, navbar: true, header: true},
+      component: ()=> import('../views/ChallengeView.vue')
+    },
+    {
+      path: '/challenge/:id',
+      name: 'check-challenge',
+      meta: { guest: false, navbar: true, header: true},
+      component: ()=> import('../views/CheckChallenge.vue')
+    },
+    {
+      path: '/collectStars',
+      name: 'collectStars',
+      meta: { guest: false, navbar: true, header: false},
+      component: () => import('../views/PlayCollectStarsView.vue')
+    },
+    {
+      path: '/collectStars/:recieverId',
+      name: 'collectStars-challenge',
+      meta: { guest: false, navbar: true, header: false},
+      component: () => import('../views/PlayCollectStarsView.vue')
     },
     {
       path: '/about',

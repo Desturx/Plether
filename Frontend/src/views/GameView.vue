@@ -11,7 +11,7 @@
             <img :src="game.image" alt="">
             <div class="buttons">
                 <button class="btn-submit" @click="goPlay"> jugar </button>
-                <button class="btn-submit"> desafiar a jugador </button>
+                <button class="btn-submit" @click="challenge"> desafiar a jugador </button>
             </div>
         </div>
 
@@ -20,12 +20,16 @@
             <div id="score-box">
                 <div id="best-score">
                     <h3>La mejor: </h3>
-                    <h3> 20.000</h3>
+                    <h3> {{ bestScore }}</h3>
                 </div>
 
                 <div id="scores">
                     <table>
-                        <tr>
+                        <tr v-for="(score, index) in scores" :key="index" :score="score">
+                            <td> {{ score.date }}</td>
+                            <td> {{ score.points }}</td>
+                        </tr>
+                        <!-- <tr>
                             <td>fecha</td>
                             <td>21231231</td>
                         </tr>
@@ -37,6 +41,7 @@
                             <td>fecha</td>
                             <td>21231231</td>
                         </tr>
+                        -->
                     </table>
                 </div>
             </div>
@@ -48,7 +53,10 @@
 import { useRouter, useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import { store } from '../store/store';
 const game = ref([])
+const scores = ref([])
+const bestScore = ref()
 
 const API = "http://localhost:5000/api"
 
@@ -57,32 +65,57 @@ const route = useRoute();
 
 onMounted(()=>{
     getGame()
+    getScores()
 })
-
 
 async function getGame() {
     const url=API + "/games/" + route.params.id
     console.log(url)
     await axios.get(url, { withCredentials: true })
     .then((res)=>{
-        console.log(res)
+        console.log("De getGame: ", res)
         game.value = res.data.game
         let newImage = game.value.image.replace("src/assets/games/", "")
         game.value.image = new URL (`/src/assets/games/${newImage}`, import.meta.url)
-
     })
     .catch((err)=>{
         console.log(err)
     })
 }
 
+async function getScores() {
+    const url= API + "/points/" + store.id + "/" + store.idStarsGame
+
+    await axios.get(url, {withCredentials: true })
+    .then((res)=>{
+        console.log("Scores: ", res)
+
+        scores.value = res.data
+        bestScore.value = res.data[0].points
+        console.log(bestScore.value)
+        scores.value.forEach(element => {
+            let newDate = new Date(element.date)
+            console.log(newDate.toDateString())
+            element.date = newDate.toDateString()
+        });
+    })
+    .catch((err)=>{
+        console.log("Err Scores: ", err)
+    })
+}
+
 function goPlay() {
     let newRoute=game.value.name.replace(" ", "-")
     if(newRoute.includes("Collect-Stars")){
-        console.log("LO CONTIENE")
+        // console.log("LO CONTIENE")
+        
         router.push({path: "/collectStars" })
     }
-    
+}
+
+function challenge() {
+    let newRoute = `/games/${route.params.id}/challenge`
+    router.push({path: newRoute})
 }
 
 </script>
@@ -166,6 +199,10 @@ function goPlay() {
 }
 
 #scores {
+    height: 14em;
+    max-height: 14em;
+    overflow-y: auto;
+    
     & table  { 
         width: 100%;
 

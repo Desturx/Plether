@@ -229,12 +229,13 @@ async function declineFriendRequest(notification) {
 .overlay-background {
     height: 100%;
     width: 100%;
-    position: fixed;
+    position: absolute;
     background: rgba(51, 47, 51, 0.50);    
 }
 .overlay {
-    position: fixed;
-    right: 0%;
+    position: absolute;
+    left: 129px;
+    max-width: 301px;
     height: 83%;
     width: 70%;
     background-color: #F4E8D9;

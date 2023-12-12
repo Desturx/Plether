@@ -6,9 +6,14 @@
 </template>
 
 <script setup>
+
+
 defineProps({
-    imgSrc: String
+    imgSrc: String,
 })
+
+
+
 </script>
 
 <style scoped>

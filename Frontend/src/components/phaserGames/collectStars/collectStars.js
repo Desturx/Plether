@@ -13,13 +13,15 @@ class GameScene extends Phaser.Scene {
     score = 0;
     scoretext;
     gameOver = false;
+    scoreMutilplier = 0;
 
     preload() {
-        this.load.image('sky', 'src/assets/phaser/sky.png');
-        this.load.image('ground', 'src/assets/phaser/platform.png');
-        this.load.image('star', 'src/assets/phaser/star.png');
-        this.load.image('bomb', 'src/assets/phaser/bomb.png');
-        this.load.spritesheet('dude', 'src/assets/phaser/dude.png', { frameWidth: 32, frameHeight: 48 });
+        let path = 'http://localhost:5173/'
+        this.load.image('sky', path + 'src/assets/phaser/sky.png');
+        this.load.image('ground', path + 'src/assets/phaser/platform.png');
+        this.load.image('star', path + 'src/assets/phaser/star.png');
+        this.load.image('bomb', path + 'src/assets/phaser/bomb.png');
+        this.load.spritesheet('dude', path + 'src/assets/phaser/dude.png', { frameWidth: 32, frameHeight: 48 });
     }
 
     
@@ -43,7 +45,7 @@ class GameScene extends Phaser.Scene {
     
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.stars, this.platforms);
-        this.physics.add.collider(this.bombs, this.platforms)
+        this.physics.add.collider(this.bombs, this.platforms, this.bounceBomb, null, this)
         
     
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this)
@@ -73,13 +75,18 @@ class GameScene extends Phaser.Scene {
         
 
         this.stars.children.iterate(function (child) {
-            let bounce = child.body.bounce
-            // console.log(bounce)
-            if(child.body.touching.down && child.body.bounce.y > 0) {
-                child.setBounceY(child.body.bounce.y - 0.1)
+            if(child.body.touching.down) {
+                if(child.body.bounce.y > 0 && child.body.bounce.x > 0) {
+                    child.setBounce(child.body.bounce.x - 0.2, child.body.bounce.y - 0.1)
+                } else {
+                    child.setBounce(0, 0)
+                    child.setVelocity(0, 0)
+
+                    // child.setVelocity(child.body.velocity., 0)
+                }
             }
-            
         })
+
     }
     
     
@@ -133,7 +140,7 @@ class GameScene extends Phaser.Scene {
     
     collectStar(player, star) {
         star.disableBody(true, true)
-        this.score +=10
+        this.score +=10 + this.scoreMutilplier
         this.scoretext.setText('Score: ' + this.score)
     
         if(this.stars.countActive(true) === 0) 
@@ -142,8 +149,8 @@ class GameScene extends Phaser.Scene {
                 child.enableBody(true, Phaser.Math.Between(100, 832), Phaser.Math.Between(0, 200), true, true)
                 child.setBounce(1)
                 star.setVelocity(Phaser.Math.Between(-200, 200), 20)
-
             });
+            this.scoreMutilplier += 10
     
             var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400) 
     
@@ -162,6 +169,14 @@ class GameScene extends Phaser.Scene {
         starsGame.setGameOver(this.gameOver)
         starsGame.setPoints(this.score)
         
+    }
+
+    bounceBomb(bomb, platform){
+        // just in case i want to do something when the bomb bounces of a platform
+        // console.log()
+        // Phaser.Math.
+        // Phaser.Math.RandomXY(bomb.body.velocity, 500);
+
     }
 }
 

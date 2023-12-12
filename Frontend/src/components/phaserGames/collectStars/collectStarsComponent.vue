@@ -1,4 +1,8 @@
 <template>
+    <div v-if="showScore" class="showScore" @click="sendNextPage">
+        <h1>PUNTUACIÓN</h1>
+        <h2>{{ showPoints }}</h2>
+    </div>
     <div id="phaser-game"></div>
 </template>
 
@@ -6,14 +10,21 @@
 import Phaser from 'phaser';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import GameScene from './collectStars.js'
-import { starsGame } from '@/store/store'
+import { starsGame, store } from '@/store/store'
 import { useRouter } from 'vue-router';
-
+import axios from 'axios'
 
 const router = useRouter();
 const phaserGame = ref(null)
+const showScore = ref(false)
+const showPoints = ref(0)
+const API = "http://localhost:5000/api"
 
-onMounted(()=>{
+const uploadedScore = ref(false)
+
+const emits = defineEmits(['sendScore'])
+
+onMounted(()=> {
     const config = {
         type: Phaser.AUTO,
         width: 932,
@@ -30,6 +41,7 @@ onMounted(()=>{
     }
 
     phaserGame.value = new Phaser.Game(config)
+
 })
 
 onUnmounted(()=>{
@@ -42,11 +54,64 @@ watch(
   ()=> starsGame.isGameOver,
   (newValue)=>{
     if(newValue === true){
-        console.log("EL JUGADOR MUERE")
+        // console.log("EL JUGADOR MUERE")
+        showScore.value = true;
+        showPoints.value = starsGame.points;
         
+        emits('sendScore', showPoints.value)
+        // uploadScore()
+
     }
     // abandonar la room anterior, unirse a la nueva
   }
 )
 
+function sendNextPage() {
+    // router.go(-1)
+    router.push({path: '/'})
+}
+
+// async function uploadScore() {
+//     console.log("Id starsgame: ", store.idStarsGame )
+//     console.log("id usuario: ", store.id)
+
+//     const url = API + "/points"
+//     // console.log(url)
+   
+//     await axios.post(url, {
+//         userId: store.id,
+//         gameId: store.idStarsGame,
+//         points: showPoints.value,
+//         date: new Date()
+//     }, {withCredentials: true})
+//     .then((res)=>{
+//         console.log(res)
+//         uploadedScore.value = true;
+//     })
+//     .catch((error)=>{
+//         console.log(error)
+//     })
+// }   
 </script>
+
+
+<style scoped>
+.showScore {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.609);
+    text-align: center;
+    padding: 170px 0;
+    color: var(--blanquito-hueso);
+    font-family: 'Inter';
+    font-size: 1.5em;
+
+
+
+}
+
+</style>

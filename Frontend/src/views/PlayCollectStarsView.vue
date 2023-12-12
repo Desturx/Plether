@@ -1,22 +1,75 @@
 <template>
-   <phaser-component></phaser-component>
+   <PhaserComponent @send-score="recieveScore"></PhaserComponent>
 </template>
 
 <script setup>
 // import '../phaserGame.js'
 // For testing
-// import PhaserComponent from '../components/phaserGames/phaserTest.vue';
 import PhaserComponent from '../components/phaserGames/collectStars/collectStarsComponent.vue'
-// import { onMounted } from 'vue'
-// import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { store } from '@/store/store'
+import axios from 'axios'
 
-// const route = useRoute();
+const API = "http://localhost:5000/api"
+const route = useRoute()
+const isChallenge = ref(false)
 
-// onMounted(()=>{
-//    // if(route.params.name.includes("collect stars")) {
-//    //    console.log(true)
-//    // }
-// })
+onMounted(()=>{
+   if(route.params.recieverId) {
+      // console.log("existen los dos")
+      isChallenge.value = true;
+   }
+})
+
+function recieveScore(score) {
+   console.log(score)
+
+   if(isChallenge.value) {
+      updateScore(score)
+   } else {
+      uploadScore(score)
+   }
+}
+
+async function updateScore(score) {
+   const url = API + '/challenges/updateScore'
+   console.log("Se mantiene la score?", score)
+   await axios.post(url, {
+      senderId: store.id,
+      recieverId: route.params.recieverId,
+      senderPoints: score
+   }, { withCredentials: true})
+   .then((res)=>{
+      console.log('Nueva score del emisor: ', res)
+   })
+   .catch((err)=>{
+      console.log(err)
+   })
+}
+
+async function uploadScore(score) {
+    console.log("Id starsgame: ", store.idStarsGame )
+    console.log("id usuario: ", store.id)
+
+    const url = API + "/points"
+    // console.log(url)
+   
+    await axios.post(url, {
+        userId: store.id,
+        gameId: store.idStarsGame,
+        points: score,
+        date: new Date()
+    }, {withCredentials: true})
+    .then((res)=>{
+        console.log(res)
+
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
 
 </script>
 

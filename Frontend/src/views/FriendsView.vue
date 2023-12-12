@@ -89,10 +89,10 @@ async function sendRequest() {
 
 }
 
-function getFriends() {
+async function getFriends() {
     const url="http://localhost:5000/api/users/friends/" + store.id;
 
-    axios.get(url, {withCredentials: true})
+    await axios.get(url, {withCredentials: true})
     .then((res)=>{
         console.log(res)
         friends.value = res.data.friends

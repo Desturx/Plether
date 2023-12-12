@@ -35,6 +35,11 @@ onMounted(()=>{
       // } 
     });
 
+    socket.on('challenge friend', (data)=>{
+        console.log('Notification received (challenge): ', data)
+        reloadChallenges.value = !reloadChallenges.value
+    })
+
 })
 
 watch(
@@ -55,6 +60,7 @@ const showOverlayIzq = ref(false);
 const showOverlayDer1 = ref(false);
 const showOverlayDer2 = ref(false);
 const reloadNotis = ref(false)
+const reloadChallenges = ref(false)
 
 const buttonChangeColor = computed(() => ({
   active: showOverlayIzq.value
@@ -143,9 +149,9 @@ function disableOverlays() {
   <!-- Overlays -->
   <OverlayHamburguesa v-if="showOverlayIzq" @close-overlays="disableOverlays"/>
   <NotifyMenu v-if="showOverlayDer2" :key="reloadNotis"> </NotifyMenu>
-  <ChallengesMenu v-if="showOverlayDer1" />
+  <ChallengesMenu v-if="showOverlayDer1" :key="reloadChallenges" />
   
-  <RouterView />
+  <RouterView :key="$route.fullPath"/>
 
 </template>
 

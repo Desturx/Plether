@@ -46,6 +46,21 @@ router.get('/:id', async (req, res) => {
     
 })
 
+router.get('/userByMail/:mail', async (req, res) => {
+    try {
+        const user = await UserModel.findOne({mail: req.params.mail}).select('-password')
+        console.log('El usuario', user)
+        if(user != null) {
+            return res.status(200).send(user)
+        }
+        else {
+            return res.status(404).json({error: 'user not found'})
+        }
+    } catch(err) {
+        res.status(500).send(err)
+    }
+})
+
 // Get the friend requests for a specific user
 router.get('/friend-request/:id', async (req, res) => {
     
@@ -73,9 +88,7 @@ router.post('/', async (req, res) => {
     
     const user = new UserModel(req.body);
     const existingMail = await UserModel.findOne({mail: req.body.mail})
-    // console.log(existingMail)
     if(existingMail !== null) {
-        // console.log("hehehehe")
         return res.status(401).json({error: 'user already exists'})
     } 
 

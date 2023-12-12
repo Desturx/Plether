@@ -50,12 +50,14 @@ const emit = defineEmits(['closeOverlays'])
 .overlay-background {
     height: 100%;
     width: 100%;
+    max-width: 430px;
     position: fixed;
     background: rgba(51, 47, 51, 0.50);    
 }
 .overlay {
     position: fixed;
     height: 83%;
+    max-width: 301px;
     width: 70%;
     background-color: #F4E8D9;
     opacity: 100%;

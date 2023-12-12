@@ -22,9 +22,6 @@ defineProps({
 })
 
 
-function deleteFriend(){
-    console.log("deleting friend")
-}
 </script>
 
 <style scoped>
