@@ -2,7 +2,8 @@ import Phaser from 'phaser'
 import { starsGame } from '@/store/store'
 
 class GameScene extends Phaser.Scene {
-    constructor() {
+    constructor() 
+    {
         super('GameScene')
     }
     stars;
@@ -21,6 +22,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('ground', path + 'src/assets/phaser/platform.png');
         this.load.image('star', path + 'src/assets/phaser/star.png');
         this.load.image('bomb', path + 'src/assets/phaser/bomb.png');
+        this.load.image('wall', path + 'src/assets/phaser/wall.png')
         this.load.spritesheet('dude', path + 'src/assets/phaser/dude.png', { frameWidth: 32, frameHeight: 48 });
     }
 
@@ -28,6 +30,7 @@ class GameScene extends Phaser.Scene {
     create() {
         // todos los objetos tienen su origen en el centro, por eso hay que ponerlos desplazados
         // el orden en que cargan los elementos es importante
+
         this.add.image(932/2, 430/2, 'sky');
     
         this.scoretext = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000'})
@@ -36,23 +39,40 @@ class GameScene extends Phaser.Scene {
         this.createStars()
         this.createBombs()
     
-    
+        this.walls  = this.physics.add.staticGroup();
+        this.walls.create(0, 215, 'wall')
+        this.walls.create(934, 215, 'wall')
+
         this.platforms = this.physics.add.staticGroup();
         // platforms.create(0, 430, 'ground').setScale(2).refreshBody()
         this.platforms.create(0, 430, 'ground')
         this.platforms.create(400, 430, 'ground')
         this.platforms.create(800, 430, 'ground')
-    
+        
+        this.physics.add.collider(this.player, this.walls);
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.stars, this.platforms);
+        this.physics.add.collider(this.stars, this.walls);
         this.physics.add.collider(this.bombs, this.platforms, this.bounceBomb, null, this)
+        this.physics.add.collider(this.bombs, this.walls);
         
     
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this)
         this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this)
         this.cursors = this.input.keyboard.createCursorKeys();
-    
+        
+
+        // test
+        // this.scale.on('resize', this.resize, this)
+
     }
+
+    // resize (gameSize, baseSize, displaySize, resolution) {
+    //     const width = gameSize.width;
+    //     const height = gameSize.height;
+
+    //     this.cameras.resize(width, height);
+    // }
     
     update() {
         if(this.cursors.left.isDown){
@@ -69,7 +89,7 @@ class GameScene extends Phaser.Scene {
         }
     
         if(this.cursors.up.isDown && this.player.body.touching.down){
-            this.player.setVelocityY(-200)
+            this.player.setVelocityY(-330)
         }
 
         
@@ -93,7 +113,7 @@ class GameScene extends Phaser.Scene {
     createPlayer() {
         this.player = this.physics.add.sprite(100,200, 'dude')
         this.player.setBounce(0.2);
-        this.player.setCollideWorldBounds(true)
+        // this.player.setCollideWorldBounds(true)
     
         this.anims.create({
             key: 'left',
@@ -125,7 +145,7 @@ class GameScene extends Phaser.Scene {
             let star = this.stars.create(Phaser.Math.Between(100, 832), Phaser.Math.Between(0, 200), 'star')
             star.setBounce(1)
             star.setVelocity(Phaser.Math.Between(-200, 200), 20)
-            star.setCollideWorldBounds(true)
+            // star.setCollideWorldBounds(true)
         }
     
         // this.stars.children.iterate(function (child) {
@@ -156,7 +176,7 @@ class GameScene extends Phaser.Scene {
     
             var bomb = this.bombs.create(x, 16, 'bomb')
             bomb.setBounce(1)
-            bomb.setCollideWorldBounds(true)
+            // bomb.setCollideWorldBounds(true)
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20)
         }
     }

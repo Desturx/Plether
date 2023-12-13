@@ -28,7 +28,9 @@ router.post('/updateScore', async (req, res) => {
     console.log("el body: ", req.body)
     console.log("aqui entra")
     try {
-        if(senderPoints !== "") {
+        
+        // if(senderPoints !== "" || senderPoints !== null) {
+        if(req.body.hasOwnProperty('senderPoints') && senderPoints !== "") {
             console.log("actualiza los puntos del emisor")
             var challenge = await ChallengeModel.findOneAndUpdate(
                 {
@@ -43,7 +45,7 @@ router.post('/updateScore', async (req, res) => {
 
             // return res.status(200).send(challenge)
         }
-        else if(recieverPoints !== "") {
+        else if(req.body.hasOwnProperty('recieverPoints') && recieverPoints !== "") {
             console.log("actualiza los puntos del recibido")
             var challenge = await ChallengeModel.findOneAndUpdate(
                 { senderId: senderId, recieverId: recieverId },

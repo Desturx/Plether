@@ -25,11 +25,29 @@ const uploadedScore = ref(false)
 const emits = defineEmits(['sendScore'])
 
 onMounted(()=> {
+    // const config = {
+    //     type: Phaser.AUTO,
+    //     width: 932,
+    //     height: 430,
+    //     parent: 'phaser-game',
+    //     physics: {
+    //         default: 'arcade',
+    //         arcade: {
+    //             gravity: { y: 400},
+    //             debug: false
+    //         }
+    //     },
+    //     scene: [GameScene]
+    // }
     const config = {
         type: Phaser.AUTO,
-        width: 932,
-        height: 430,
-        parent: 'phaser-game',
+        // backgroundColor: '#2dab2d',
+        scale: {
+            mode: Phaser.Scale.RESIZE,
+            parent: 'phaser-game',
+            width: '932px',
+            height: '430px'
+        },
         physics: {
             default: 'arcade',
             arcade: {
@@ -37,8 +55,12 @@ onMounted(()=> {
                 debug: false
             }
         },
-        scene: [GameScene]
-    }
+        scene: [GameScene],
+        camera: {
+            widht: 932,
+            height: 430
+        },
+};
 
     phaserGame.value = new Phaser.Game(config)
 
@@ -71,6 +93,8 @@ function sendNextPage() {
     router.push({path: '/'})
 }
 
+
+
 // async function uploadScore() {
 //     console.log("Id starsgame: ", store.idStarsGame )
 //     console.log("id usuario: ", store.id)
@@ -96,6 +120,7 @@ function sendNextPage() {
 
 
 <style scoped>
+
 .showScore {
     position: fixed;
     z-index: 1;

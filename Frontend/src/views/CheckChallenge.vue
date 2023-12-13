@@ -1,5 +1,5 @@
 <template>
-    <div class="content" :key="key">
+    <div class="content">
         <div class="challenge-title">
             <div v-if="isSender">
                 <h3>TU</h3>
@@ -37,7 +37,7 @@
         </div>
 
         <div id="btn-holder">
-            <button class="btn-submit" @click="sendChallenge">Mandar desafio y jugar </button>
+            <button v-if="showButton && !challengeEnded" class="btn-submit" @click="acceptDuel">Aceptar y jugar </button>
         </div>
 
         <div id="score">
@@ -64,6 +64,9 @@
             </div>
         </div>
 
+        <div id="btn-holder">
+            <button v-if="challengeEnded && isSender" class="btn-submit" @click="endChallenge">Finalizar</button>
+        </div>
 
     </div>
 </template>
@@ -73,23 +76,72 @@
 
 import axios from 'axios';
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { store } from '../store/store';
 
 const API = "http://localhost:5000/api"
-const router = useRoute()
+const route = useRoute()
+const router = useRouter()
 
 const challenge = ref([])
 const isSender = ref(false)
+const showButton = ref(true)
+const challengeEnded = ref(false)
 
 onMounted(()=>{
     getChallenge()
 })
 
+function acceptDuel() {
+    router.push({ path: `/collectStars/${challenge.value.senderId}/false`})
+}
 
+function endChallenge() {
+    console.log("TERMINADO EL CHALLENGE")
+    //TO-DO: hacer que cuando se termine el challenge:
+    // 1 - se muestre la pantalla de victoria o derrota
+    // caso en el que el el que manda el desafio es el usuario
+    if(isSender.value === true) {
+        // si manda el desafio, gana si los puntos del sender son mayores
+        if(challenge.value.senderPoints > challenge.value.recieverPoints) {
+            console.log("HAS GANADO")
+        } 
+        else {
+            console.log("HAS PERDIDO")
+        }
+    } else {
+        if(challenge.value.senderPoints > challenge.value.recieverPoints) {
+            console.log("HAS PERDIDO")
+        } else {
+            console.log("HAS GANADO")
+        }
+    }
+
+    // 2 - se elimine el challenge de la base de datos.
+}
+
+function checkScores() {
+    // console.log("El challenge: ", challenge.value)
+    var puntos1 = false
+    var puntos2 = false;
+    if(challenge.value.recieverPoints !== null && challenge.value.recieverPoints >= 0) {
+        // console.log('hay puntos de receptor')
+        puntos1 = true;
+    }
+
+    if(challenge.value.senderPoints !== null && challenge.value.senderPoints >= 0) {
+        // console.log('hay puntos de emisor')
+        puntos2 = true;
+    }
+
+    if(puntos1 && puntos2) {
+        console.log("SE HA TERMINADO EL CHALLENGE")
+        challengeEnded.value = true;
+    }
+}
 
 async function getChallenge() {
-    const url = API + "/challenges/challenge/" + router.params.id
+    const url = API + "/challenges/challenge/" + route.params.id
 
     await axios.get(url, { withCredentials: true })
     .then((res)=>{
@@ -99,13 +151,23 @@ async function getChallenge() {
         if(res.data.senderId === store.id) {
             console.log("es el sender")
             isSender.value = true;
+            // si lo ha mandado quitar el botón.
+            showButton.value = false
         } 
     })
     .catch((err)=>{
         console.log('Error de getChallenge: ',err)
     })
 
+
+    checkScores()
+
+
 }
+
+
+
+
 </script>
 
 <style scoped>

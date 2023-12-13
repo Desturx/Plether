@@ -14,11 +14,16 @@ import axios from 'axios'
 const API = "http://localhost:5000/api"
 const route = useRoute()
 const isChallenge = ref(false)
+const isSender = ref(false)
 
 onMounted(()=>{
    if(route.params.recieverId) {
       // console.log("existen los dos")
       isChallenge.value = true;
+   }
+
+   if(route.params.isSender === 'true') {
+      isSender.value = true
    }
 })
 
@@ -35,17 +40,34 @@ function recieveScore(score) {
 async function updateScore(score) {
    const url = API + '/challenges/updateScore'
    console.log("Se mantiene la score?", score)
-   await axios.post(url, {
-      senderId: store.id,
-      recieverId: route.params.recieverId,
-      senderPoints: score
-   }, { withCredentials: true})
-   .then((res)=>{
-      console.log('Nueva score del emisor: ', res)
-   })
-   .catch((err)=>{
-      console.log(err)
-   })
+   if(isSender.value === true) {
+      await axios.post(url, {
+         senderId: store.id,
+         recieverId: route.params.recieverId,
+         senderPoints: score
+      }, { withCredentials: true})
+      .then((res)=>{
+         console.log('Nueva score del emisor: ', res)
+      })
+      .catch((err)=>{
+         console.log(err)
+      })
+   } else {
+      await axios.post(url, {
+         senderId: route.params.recieverId,
+         recieverId: store.id,
+         recieverPoints: score
+      }, { withCredentials: true})
+      .then((res)=>{
+         console.log('Nueva score del receptor: ', res)
+      })
+      .catch((err)=>{
+         console.log(err)
+      })
+   }
+
+
+   
 }
 
 async function uploadScore(score) {

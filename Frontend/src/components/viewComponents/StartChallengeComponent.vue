@@ -97,7 +97,7 @@ async function sendChallenge() {
             message: messageTypes.CHALLENGE_REQUEST
         })
 
-        router.push({ path: `/collectStars/${id}`})
+        router.push({ path: `/collectStars/${id}/true`})
     })
     .catch((err)=>{
         console.log(err)

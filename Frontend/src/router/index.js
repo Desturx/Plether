@@ -48,7 +48,7 @@ const router = createRouter({
       component: () => import('../views/PlayCollectStarsView.vue')
     },
     {
-      path: '/collectStars/:recieverId',
+      path: '/collectStars/:recieverId/:isSender',
       name: 'collectStars-challenge',
       meta: { guest: false, navbar: true, header: false},
       component: () => import('../views/PlayCollectStarsView.vue')

@@ -1,7 +1,6 @@
 import { reactive, watch } from 'vue'
 
 
-
  const store = reactive({
     username: '',
     mail: '',

@@ -42,8 +42,7 @@ router.get('/:id', async (req, res) => {
 
     } catch(error) {
         res.status(500).send(error)
-    }
-    
+    }   
 })
 
 router.get('/userByMail/:mail', async (req, res) => {

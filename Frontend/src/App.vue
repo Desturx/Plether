@@ -126,13 +126,14 @@ function disableOverlays() {
       </div>
 
       <RouterLink to="/profile" @click="disableOverlays">
-        <div>
-          <img alt="Hamburguer icon" src="@/assets/svgs/personIcon.svg" />
+        <div id="profile-box">
+          <p>{{  store.username }}</p>
+          <img alt="profile" src="@/assets/svgs/personIcon.svg" />
         </div>
       </RouterLink>
 
       <div :class="button3ChangeColor" @click="changeShow('der2', !showOverlayDer2)">
-        <img alt="Hamburguer icon" src="@/assets/svgs/notifyIcon.svg" />
+        <img alt="Notification icon" src="@/assets/svgs/notifyIcon.svg" />
         <!-- <v-icon fill="#1A191B" scale="1.3" name="io-notifications" /> -->
 
       </div>
@@ -157,6 +158,21 @@ function disableOverlays() {
 
 
 <style scoped>
+
+
+#profile-box {
+  display: flex;
+  margin-right: 1em;
+  & p {
+    color: var(--casi-negro);
+    font-family: Inter;
+    /* font-size: 0.75rem; */
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-right: 0.4em;
+  }
+}
 #hamburguer {
   float: left;
   text-align: center;
