@@ -10,35 +10,19 @@
 import Phaser from 'phaser';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import GameScene from './collectStars.js'
-import { starsGame, store } from '@/store/store'
+import { starsGame } from '@/store/store'
 import { useRouter } from 'vue-router';
-import axios from 'axios'
 
 const router = useRouter();
 const phaserGame = ref(null)
 const showScore = ref(false)
 const showPoints = ref(0)
-const API = "http://localhost:5000/api"
 
-const uploadedScore = ref(false)
 
 const emits = defineEmits(['sendScore'])
 
 onMounted(()=> {
-    // const config = {
-    //     type: Phaser.AUTO,
-    //     width: 932,
-    //     height: 430,
-    //     parent: 'phaser-game',
-    //     physics: {
-    //         default: 'arcade',
-    //         arcade: {
-    //             gravity: { y: 400},
-    //             debug: false
-    //         }
-    //     },
-    //     scene: [GameScene]
-    // }
+    
     const config = {
         type: Phaser.AUTO,
         // backgroundColor: '#2dab2d',
@@ -60,7 +44,7 @@ onMounted(()=> {
             widht: 932,
             height: 430
         },
-};
+    };
 
     phaserGame.value = new Phaser.Game(config)
 
@@ -92,30 +76,7 @@ function sendNextPage() {
     // router.go(-1)
     router.push({path: '/'})
 }
-
-
-
-// async function uploadScore() {
-//     console.log("Id starsgame: ", store.idStarsGame )
-//     console.log("id usuario: ", store.id)
-
-//     const url = API + "/points"
-//     // console.log(url)
-   
-//     await axios.post(url, {
-//         userId: store.id,
-//         gameId: store.idStarsGame,
-//         points: showPoints.value,
-//         date: new Date()
-//     }, {withCredentials: true})
-//     .then((res)=>{
-//         console.log(res)
-//         uploadedScore.value = true;
-//     })
-//     .catch((error)=>{
-//         console.log(error)
-//     })
-// }   
+  
 </script>
 
 
