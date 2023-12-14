@@ -20,10 +20,10 @@
               </span>
           </div>
 
-          <div>
+          <!-- <div>
               <p>Repetir contraseña</p>
               <input v-model="passwordCheck" placeholder="edit me" />
-          </div>
+          </div> -->
 
           <div>
               <button class="btn-submit">submit</button>

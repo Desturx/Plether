@@ -1,39 +1,41 @@
 <template>
     <div class="overlay-background">
         <div class="overlay">
+            <div class="overflow-list">
+                <div class="item" v-for="challenge in challenges" :key="challenge.id">
+                    <ChallengeComponent v-if="challenge.isSender">
+                        <div class="user">
+                            <img src="@/assets/svgs/profileIcon.svg" alt="">
+                            <p>Tu</p>
+                        </div>
+                        <div class="versus">
+                            <img src="@/assets/svgs/versusImage.svg" alt="">
+                            <p>vs</p>
+                            <button @click="goToChallenge(challenge)">ver</button>
+                        </div>
+                        <div class="enemy">
+                            <img src="@/assets/svgs/profileIcon.svg" alt="">
+                            <p>{{ challenge.recieverName }}</p>
+                        </div>
+                    </ChallengeComponent>
+                   <ChallengeComponent v-else>
+                        <div class="enemy">
+                            <img src="@/assets/svgs/profileIcon.svg" alt="">
+                            <p>{{ challenge.senderName }}</p>
+                        </div>
+                        <div class="versus">
+                            <img src="@/assets/svgs/versusImage.svg" alt="">
+                            <p>vs</p>
+                            <button @click="goToChallenge(challenge)">ver</button>
+                        </div>
+                        <div class="user">
+                            <img src="@/assets/svgs/profileIcon.svg" alt="">
+                            <p>Tu</p>
+                        </div>
+                        
+                   </ChallengeComponent>
+                </div>
 
-            <div class="item" v-for="challenge in challenges" :key="challenge.id">
-                <ChallengeComponent v-if="challenge.isSender">
-                    <div class="user">
-                        <img src="@/assets/svgs/profileIcon.svg" alt="">
-                        <p>Tu</p>
-                    </div>
-                    <div class="versus">
-                        <img src="@/assets/svgs/versusImage.svg" alt="">
-                        <p>vs</p>
-                        <button @click="goToChallenge(challenge)">ver</button>
-                    </div>
-                    <div class="enemy">
-                        <img src="@/assets/svgs/profileIcon.svg" alt="">
-                        <p>{{ challenge.recieverName }}</p>
-                    </div>
-                </ChallengeComponent>
-               <ChallengeComponent v-else>
-                    <div class="enemy">
-                        <img src="@/assets/svgs/profileIcon.svg" alt="">
-                        <p>{{ challenge.senderName }}</p>
-                    </div>
-                    <div class="versus">
-                        <img src="@/assets/svgs/versusImage.svg" alt="">
-                        <p>vs</p>
-                        <button @click="goToChallenge(challenge)">ver</button>
-                    </div>
-                    <div class="user">
-                        <img src="@/assets/svgs/profileIcon.svg" alt="">
-                        <p>Tu</p>
-                    </div>
-                    
-               </ChallengeComponent>
             </div>
             <!-- <div class="item">
                 <div class="user">
@@ -186,10 +188,15 @@ async function getChallenges() {
     position: absolute;
     background: rgba(51, 47, 51, 0.50);    
 }
+.overflow-list {
+    margin-top: 1em;
+    overflow-y: auto;
+    max-height: 90%;
+}
 .overlay {
     position: absolute;
     left: 129px;
-    height: 83%;
+    height: 80%;
     max-width: 301px;
     width: 70%;
     background-color: #F4E8D9;

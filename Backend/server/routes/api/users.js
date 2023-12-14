@@ -302,7 +302,7 @@ router.post('/test', async (req, res) => {
 
 
 // ==== DELETE ====
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, async (req, res) => {
     try {
        await UserModel.deleteOne({_id: req.params.id})
        res.status(200).send({

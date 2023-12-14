@@ -117,7 +117,9 @@ function disableOverlays() {
     <div class="logo">
       <img style="width: 300px;" alt="Plether logo" src="@/assets/logo.png" >
     </div>
-    
+    <div id="name-box" v-if="$route.meta.navbar">
+      <p>{{  store.username }}</p>
+    </div>
     <!-- <nav class="navigation" v-if="state.isUserLoggedIn" > -->
     <nav class="navigation" v-if="$route.meta.navbar" >
       <div :class="buttonChangeColor" id="hamburguer" @click="changeShow('izq', !showOverlayIzq)">
@@ -127,7 +129,7 @@ function disableOverlays() {
 
       <RouterLink to="/profile" @click="disableOverlays">
         <div id="profile-box">
-          <p>{{  store.username }}</p>
+          
           <img alt="profile" src="@/assets/svgs/personIcon.svg" />
         </div>
       </RouterLink>
@@ -143,8 +145,9 @@ function disableOverlays() {
       <!-- <div><RouterLink to="/">HOME</RouterLink></div>
       <div><RouterLink to="/">HOME</RouterLink></div>
       <div><RouterLink to="/">HOME</RouterLink></div> -->
+      
     </nav>
-
+    
   </header>
 
   <!-- Overlays -->
@@ -160,10 +163,11 @@ function disableOverlays() {
 <style scoped>
 
 
-#profile-box {
-  display: flex;
+#name-box {
   margin-right: 1em;
+
   & p {
+    text-align: right;
     color: var(--casi-negro);
     font-family: Inter;
     /* font-size: 0.75rem; */
