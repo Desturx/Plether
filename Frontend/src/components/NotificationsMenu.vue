@@ -8,9 +8,14 @@
                     <p> {{ notification.senderName }} {{ notification.title }} </p>
                     <v-icon v-if="notification.showTrash" fill="#f4e8d9" scale="1.4" name="bi-trash-fill" />
                 </div>
-                <div class="item-bottom">
+                <div class="item-bottom" v-if="notification.showAcceptDecline">
                     <v-icon fill="#f4e8d9" scale="2" name="md-check-round"  @click="acceptFriendRequest(notification)"/>
                     <v-icon fill="#f4e8d9" scale="2" name="md-close-round" @click="declineFriendRequest(notification)"/>
+                </div>
+                <div v-else>
+                    <p>{{ notification.others[0] }} - {{ notification.senderName }}</p>
+                    <p>{{  notification.others[1] }} - tu </p>
+                    
                 </div>
             </div>
 
@@ -30,7 +35,11 @@ const API = "http://localhost:5000/api"
 const notifications = ref([])
 
 onMounted(()=>{
+
+    console.log("NOTIFICACIONES DE DUELOS: ", store.duelNotifications)
+
     getNotifications()
+
 })
 
 async function getNotifications() {
@@ -47,11 +56,20 @@ async function getNotifications() {
                 element.title =" quiere ser tu amigo"
                 element.iconName="fa-user-friends"
                 element.showTrash= false;
+                element.showAcceptDecline = true;
+            }
+            
+            if(element.message === messageTypes.DUEL_LOST) {
+                element.title = " te ha ganado"
+                element.iconName = "swords"
+                element.showTrash = true;
+                element.showAcceptDecline = false;
             }
         });
 
 
         notifications.value = res.data
+
     })
     .catch( (err)=>{
         console.log(err)

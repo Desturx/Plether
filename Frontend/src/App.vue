@@ -8,6 +8,8 @@ import ChallengesMenu from './components/ChallengesMenu.vue'
 // import { io } from 'socket.io-client'
 import { socket } from '@/socket'
 import { store } from '@/store/store'
+import { messageTypes } from './socket'
+
 
 onMounted(()=>{
     // const socket = io('http://localhost:3000')
@@ -30,9 +32,10 @@ onMounted(()=>{
     socket.on('notification created', async (notification) => {
       console.log('Notification Received: ', notification);
       reloadNotis.value = !reloadNotis.value
-      // if(notification.message===messageTypes.FRIEND_REQUEST){
-        //TO-DO: Ver si mando un toast o un snackbar para que se pueda ver
-      // } 
+      if(notification.message === messageTypes.DUEL_LOST || notification.message === messageTypes.DUEL_WON) {
+        store.duelNotifications.push(notification)
+      }
+
     });
 
     socket.on('challenge friend', (data)=>{
@@ -152,7 +155,7 @@ function disableOverlays() {
 
   <!-- Overlays -->
   <OverlayHamburguesa v-if="showOverlayIzq" @close-overlays="disableOverlays"/>
-  <NotifyMenu v-if="showOverlayDer2" :key="reloadNotis"> </NotifyMenu>
+  <NotifyMenu v-if="showOverlayDer2" :key="reloadNotis" :duelData="duelNotifData"> </NotifyMenu>
   <ChallengesMenu v-if="showOverlayDer1" :key="reloadChallenges" />
   
   <RouterView :key="$route.fullPath"/>

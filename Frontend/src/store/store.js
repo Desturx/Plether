@@ -7,6 +7,7 @@ import { reactive, watch } from 'vue'
     id: '',
     idStarsGame: '',
     friendRequests: [],
+    duelNotifications: [],
     setUsername(value) {
         this.username = value
     },

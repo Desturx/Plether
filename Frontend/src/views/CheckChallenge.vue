@@ -78,7 +78,7 @@ import axios from 'axios';
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import { store } from '../store/store';
-
+import { socket, messageTypes } from '@/socket'
 const API = "http://localhost:5000/api"
 const route = useRoute()
 const router = useRouter()
@@ -105,9 +105,25 @@ function endChallenge() {
         // si manda el desafio, gana si los puntos del sender son mayores
         if(challenge.value.senderPoints > challenge.value.recieverPoints) {
             console.log("HAS GANADO")
+
+            socket.emit('notification created', {
+                recieverId: challenge.value.recieverId,
+                senderId: store.id,
+                senderName: store.username,
+                others: [challenge.value.senderPoints, challenge.value.recieverPoints],
+                message: messageTypes.DUEL_LOST
+            })
         } 
         else {
             console.log("HAS PERDIDO")
+
+            socket.emit('notification created', {
+                recieverId: challenge.value.recieverId,
+                senderId: store.id,
+                senderName: store.username,
+                points: [challenge.value.senderPoints, challenge.value.recieverPoints],
+                message: messageTypes.DUEL_WON
+            })
         }
     } else {
         if(challenge.value.senderPoints > challenge.value.recieverPoints) {
@@ -164,6 +180,7 @@ async function getChallenge() {
 
 
 }
+
 
 
 

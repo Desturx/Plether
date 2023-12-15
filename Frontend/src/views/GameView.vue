@@ -63,8 +63,8 @@ const API = "http://localhost:5000/api"
 const router = useRouter();
 const route = useRoute();
 
-onMounted(()=>{
-    getGame()
+onMounted(async ()=>{
+    await getGame()
     getScores()
 })
 
@@ -84,7 +84,9 @@ async function getGame() {
 }
 
 async function getScores() {
-    const url= API + "/points/" + store.id + "/" + store.idStarsGame
+
+    const url = API + "/points/" + store.id + "/" + game.value._id
+    // const url= API + "/points/" + store.id + "/" + store.idStarsGame
 
     await axios.get(url, {withCredentials: true })
     .then((res)=>{

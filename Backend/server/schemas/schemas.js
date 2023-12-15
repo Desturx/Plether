@@ -39,6 +39,9 @@ const NotificationSchema = new mongo.Schema({
         type: String,
         required: true,
     },
+    others : {
+        type:[],
+    },
     read: Boolean
 
 })
