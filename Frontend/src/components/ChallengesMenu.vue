@@ -185,7 +185,7 @@ async function getChallenges() {
     height: 100%;
     max-width: 430px;
     width: 100%;
-    position: absolute;
+    position: fixed;
     background: rgba(51, 47, 51, 0.50);    
 }
 .overflow-list {

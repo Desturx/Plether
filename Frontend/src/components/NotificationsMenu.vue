@@ -2,20 +2,24 @@
     <div class="overlay-background">
         <div class="overlay">
             <!-- <h2>SE APARECE EL OVERLAY DE NOTIFICACIONES</h2> -->
-            <div class="item" v-for="(notification, index) in notifications" :key="index" :notification="notification">
-                <div class="item-top">
-                    <v-icon fill="#f4e8d9" scale="2" :name="notification.iconName" />
-                    <p> {{ notification.senderName }} {{ notification.title }} </p>
-                    <v-icon v-if="notification.showTrash" fill="#f4e8d9" scale="1.4" name="bi-trash-fill" />
-                </div>
-                <div class="item-bottom" v-if="notification.showAcceptDecline">
-                    <v-icon fill="#f4e8d9" scale="2" name="md-check-round"  @click="acceptFriendRequest(notification)"/>
-                    <v-icon fill="#f4e8d9" scale="2" name="md-close-round" @click="declineFriendRequest(notification)"/>
-                </div>
-                <div v-else>
-                    <p>{{ notification.others[0] }} - {{ notification.senderName }}</p>
-                    <p>{{  notification.others[1] }} - tu </p>
-                    
+            <div class="overflow-list">
+                <div class="item" v-for="(notification, index) in notifications" :key="index" :notification="notification">
+                    <div class="item-top">
+                        <v-icon fill="#f4e8d9" scale="2" :name="notification.iconName" />
+                        <p> {{ notification.senderName }} {{ notification.title }} </p>
+                        <v-icon v-if="notification.showTrash" fill="#f4e8d9" scale="1.4" name="bi-trash-fill" @click="deleteNotification(notification)" />
+                    </div>
+                    <div class="item-bottom" v-if="notification.showAcceptDecline">
+                        <v-icon fill="#f4e8d9" scale="2" name="md-check-round"  @click="acceptFriendRequest(notification)"/>
+                        <v-icon fill="#f4e8d9" scale="2" name="md-close-round" @click="declineFriendRequest(notification)"/>
+                    </div>
+                    <div class="item-bottom2" v-else>
+                        <p>Puntos finales: </p>
+                        <div>
+                            <p>{{ notification.others[0] }} - {{ notification.senderName }}</p>
+                            <p>{{  notification.others[1] }} - tu </p>   
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -61,6 +65,13 @@ async function getNotifications() {
             
             if(element.message === messageTypes.DUEL_LOST) {
                 element.title = " te ha ganado"
+                element.iconName = "swords"
+                element.showTrash = true;
+                element.showAcceptDecline = false;
+            }
+
+            if(element.message === messageTypes.DUEL_WON) {
+                element.title = " ha sido derrotado por ti"
                 element.iconName = "swords"
                 element.showTrash = true;
                 element.showAcceptDecline = false;
@@ -203,6 +214,21 @@ async function declineFriendRequest(notification) {
 
 }
 
+
+async function deleteNotification(notification) {
+
+    const url = API + "/notifications/" + notification._id
+        await axios.delete(url, {withCredentials:true})
+        .then((res)=>{
+            console.log(res);
+            var index = notifications.value.indexOf(notification)
+
+            notifications.value.splice(index, 1)
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+}
 </script>
 
 <style scoped>
@@ -244,12 +270,39 @@ async function declineFriendRequest(notification) {
     justify-content: space-around;
     padding: 10px;
 }
+
+.item-bottom2 {
+    & p {
+        margin-top: 0.4em;
+        margin-left: 0.4em;
+        /* margin-right: 0.2em; 
+        /* text-align: left; */
+        color: var(--blanquito-hueso);
+        font-family: 'Inter';
+        font-size: 1.2rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    
+    & div {
+        display: flex;
+        justify-content: space-around;
+    }
+}
 .overlay-background {
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     background: rgba(51, 47, 51, 0.50);    
 }
+
+.overflow-list {
+    margin-top: 1em;
+    overflow-y: auto;
+    max-height: 90%;
+}
+
 .overlay {
     position: absolute;
     left: 129px;
