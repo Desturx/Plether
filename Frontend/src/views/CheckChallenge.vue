@@ -96,7 +96,7 @@ function acceptDuel() {
     router.push({ path: `/collectStars/${challenge.value.senderId}/false`})
 }
 
-function endChallenge() {
+async function endChallenge() {
     console.log("TERMINADO EL CHALLENGE")
     //TO-DO: hacer que cuando se termine el challenge:
     // 1 - se muestre la pantalla de victoria o derrota
@@ -121,7 +121,7 @@ function endChallenge() {
                 recieverId: challenge.value.recieverId,
                 senderId: store.id,
                 senderName: store.username,
-                points: [challenge.value.senderPoints, challenge.value.recieverPoints],
+                others: [challenge.value.senderPoints, challenge.value.recieverPoints],
                 message: messageTypes.DUEL_WON
             })
         }
@@ -134,7 +134,17 @@ function endChallenge() {
     }
 
     // 2 - se elimine el challenge de la base de datos.
+    const url = API + "/challenges/" + challenge.value._id
+    console.log("La url: ", url)
+    await axios.delete(url, {withCredentials: true})
+    .then((res)=>{
+        router.push({ path: `/`})
+    })
+    .catch((err)=> {
+        console.log(err)
+    })
 }
+
 
 function checkScores() {
     // console.log("El challenge: ", challenge.value)

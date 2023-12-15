@@ -19,7 +19,7 @@ const showScore = ref(false)
 const showPoints = ref(0)
 
 
-const emits = defineEmits(['sendScore'])
+const emits = defineEmits(['sendScore', 'reloadPage'])
 
 onMounted(()=> {
     
@@ -52,7 +52,9 @@ onMounted(()=> {
 
 onUnmounted(()=>{
     if(phaserGame.value) {
+        console.log("SE DESTRUYE EL PHASER GAME")
         phaserGame.value.destroy;
+        
     }
 })
 
@@ -75,6 +77,8 @@ watch(
 function sendNextPage() {
     // router.go(-1)
     router.push({path: '/'})
+
+
 }
   
 </script>

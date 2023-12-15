@@ -104,6 +104,17 @@ router.get('/challenge/:id', async (req, res) =>{
     }
 })
 
+router.delete('/:id', authenticateToken, async (req, res) => {
+    try {
+       await ChallengeModel.deleteOne({_id: req.params.id})
+       res.status(200).send({
+        "_id":`${req.params.id}`,
+        "status":"deleted"
+       })
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 
 module.exports = router;

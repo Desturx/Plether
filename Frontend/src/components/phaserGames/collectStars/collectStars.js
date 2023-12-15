@@ -60,10 +60,8 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this)
         this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this)
         this.cursors = this.input.keyboard.createCursorKeys();
-        
 
-        // test
-        // this.scale.on('resize', this.resize, this)
+
 
     }
 
@@ -92,7 +90,7 @@ class GameScene extends Phaser.Scene {
             this.player.setVelocityY(-330)
         }
 
-        
+
 
         this.stars.children.iterate(function (child) {
             if(child.body.touching.down) {

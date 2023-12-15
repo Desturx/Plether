@@ -11,7 +11,7 @@
                         <div class="versus">
                             <img src="@/assets/svgs/versusImage.svg" alt="">
                             <p>vs</p>
-                            <button @click="goToChallenge(challenge)">ver</button>
+                            <button @click="goToChallenge(challenge) ">ver</button>
                         </div>
                         <div class="enemy">
                             <img src="@/assets/svgs/profileIcon.svg" alt="">
@@ -65,6 +65,9 @@ import router from '../router';
 
 const API = "http://localhost:5000/api"
 
+const emit = defineEmits(['closeOverlays'])
+
+
 const challenges = ref([])
 
 onMounted(()=>{
@@ -74,6 +77,7 @@ onMounted(()=>{
 
 function goToChallenge(challenge) {
     console.log("El desafio: ", challenge)
+    emit('closeOverlays')
     router.push({path: `/challenge/${challenge._id}`})
 }
 

@@ -7,7 +7,7 @@
 // For testing
 import PhaserComponent from '../components/phaserGames/collectStars/collectStarsComponent.vue'
 import { useRoute } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { store } from '@/store/store'
 import axios from 'axios'
 
@@ -16,6 +16,7 @@ const route = useRoute()
 const isChallenge = ref(false)
 const isSender = ref(false)
 
+const emits = defineEmits(['reloadPage'])
 onMounted(()=>{
    if(route.params.recieverId) {
       // console.log("existen los dos")
@@ -25,6 +26,10 @@ onMounted(()=>{
    if(route.params.isSender === 'true') {
       isSender.value = true
    }
+})
+
+onUnmounted(()=>{
+   emits('reloadPage')
 })
 
 function recieveScore(score) {

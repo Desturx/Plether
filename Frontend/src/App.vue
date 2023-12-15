@@ -111,7 +111,9 @@ function disableOverlays() {
   showOverlayIzq.value = false;
 }
 
-
+function reloadThePage() {
+  location.reload()
+}
 
 </script>
 
@@ -156,10 +158,10 @@ function disableOverlays() {
   <!-- Overlays -->
   <OverlayHamburguesa v-if="showOverlayIzq" @close-overlays="disableOverlays"/>
   <NotifyMenu v-if="showOverlayDer2" :key="reloadNotis" :duelData="duelNotifData"> </NotifyMenu>
-  <ChallengesMenu v-if="showOverlayDer1" :key="reloadChallenges" />
+  <ChallengesMenu v-if="showOverlayDer1" :key="reloadChallenges" @close-overlays="disableOverlays" />
   
-  <RouterView :key="$route.fullPath"/>
-
+  <RouterView :key="$route.fullPath" />
+  <!-- @reloadPage="reloadThePage" -->
 </template>
 
 
