@@ -24,6 +24,7 @@ utilizar.
 ## Para el frontend
 > [!NOTE]
 > Antes de poner a funcionar el frontend, el backend debería estar funcionando ya, en caso de que no sea así, estará dando errores continuamente.
+
 Los pasos a seguir son los siguientes:
 1. Dentro de la carpeta `Frontend`, usamos el comando: `npm install`
 2. Para poner el proyecto a funcionar `npm run dev`
