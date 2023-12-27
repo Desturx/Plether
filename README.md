@@ -18,7 +18,7 @@ Los pasos a seguir para que la aplicación funcione:
 2. Hacer `npm install` en la carpeta de frontend para que se instalen todas las librerías.
 3. En el fichero .env cambiar `DBNAME=` por el nombre de la base de datos que se quiera utilizar. Y el `SECRET_KEY=` por el que se quiera
 utilizar.
-4. Inciar la base de datos[^1].
+4. Iniciar la base de datos[^1].
 5. Iniciar el backend mediante `npm run dev`
 
 ## Para el frontend
